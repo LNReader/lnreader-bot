@@ -1,8 +1,9 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import { CustomBaseEntity } from "./BaseEntity";
+import { Entity, EntityRepository, EntityRepositoryType, PrimaryKey, Property } from "@mikro-orm/core";
 
-@Entity()
-export class Plugin extends CustomBaseEntity {
+@Entity({customRepository: () => PluginRepository})
+export class Plugin {
+    [EntityRepositoryType]?: PluginRepository
+
     @PrimaryKey({autoincrement: false})
     id: string
 
@@ -23,4 +24,7 @@ export class Plugin extends CustomBaseEntity {
 
     @Property()
     iconUrl: string;
+}
+
+export class PluginRepository extends EntityRepository<Plugin> {
 }
