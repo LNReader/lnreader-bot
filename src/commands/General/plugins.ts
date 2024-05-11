@@ -1,0 +1,70 @@
+import { Injectable, Slash, SlashChoice, SlashOption } from "@/decorators";
+import { Category } from "@discordx/utilities";
+import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
+import { Discord } from "discordx";
+import { languages } from "./utils/language";
+import { Database } from "@/services";
+import { Plugin } from "@/entities";
+import { pluginRepoVersion } from "src/utils/constants/plugins";
+
+@Discord()
+@Category('General')
+@Injectable()
+export default class PluginsCommand {
+    constructor(
+		private db: Database,
+	) {}
+    @Slash({name: 'plugins'})
+    async plugins(
+        @SlashOption({
+            description: 'Page of request',
+            name: 'page',
+            type: ApplicationCommandOptionType.Integer,
+            required: true,
+            minValue: 1,
+        })
+        page: number,
+        @SlashChoice(...Object.values(languages))
+        @SlashOption({
+            description: "Filter plugins with language",
+            name: 'language',
+            type: ApplicationCommandOptionType.String,
+            required: false
+        })
+        language: string,
+        @SlashOption({
+            description: "Search plugins with keyword",
+            name: "keyword",
+            type: ApplicationCommandOptionType.String
+        })
+        keyword: string,
+        interaction: CommandInteraction
+    ) {
+        const pluginRepository = this.db.em.getRepository(Plugin)
+        const [plugins, totalPlugins] = await pluginRepository.findWithPage(page, language, keyword)
+        const totalPages = Math.ceil(totalPlugins / pluginRepository.pageSize);
+        const embed = new EmbedBuilder()
+            .setAuthor({
+                name: "LNReader Bot",
+                iconURL: "https://avatars.githubusercontent.com/u/81222734?s=200&v=4",
+                url: "https://github.com/LNReader/lnreader"
+            })
+            .setDescription(this.buildDescription(page, plugins))
+            .setFooter({text: `LNReader Plugins v${pluginRepoVersion}`})
+            .setTitle(`Page: ${page}/${totalPages} - Lang: ${language || 'All'}${keyword ? ' - ' + keyword : ''}`)
+        interaction.followUp({
+            embeds: [embed]
+        });
+    }
+
+    buildDescription(page: number, plugins: Plugin[]) {
+        if(plugins.length === 0){
+            return "No result."
+        }
+        return plugins
+            .map(
+                (plugin, index) => `${index + 1 + (page - 1) * 10}. [**${plugin.name}**](${plugin.site})\n ${plugin.id} - v${plugin.version}`
+            )
+            .join('\n')
+    }
+}

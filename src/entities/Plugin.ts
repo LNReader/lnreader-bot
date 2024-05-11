@@ -1,4 +1,4 @@
-import { Entity, EntityRepository, EntityRepositoryType, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, EntityRepository, EntityRepositoryType, FilterQuery, PrimaryKey, Property } from "@mikro-orm/core";
 
 @Entity({customRepository: () => PluginRepository})
 export class Plugin {
@@ -27,4 +27,26 @@ export class Plugin {
 }
 
 export class PluginRepository extends EntityRepository<Plugin> {
+    public pageSize = 10;
+    async findWithPage(page: number, language: string = '', keyword: string = '') {
+        language = '%' + language + '%';
+        keyword = '%' + keyword + '%';
+        const offset = this.pageSize * (page - 1);
+        const filterQuery: FilterQuery<Plugin> = {
+            $and: [
+                { lang: {$like: language} },
+                { $or: 
+                    [
+                        { name: {$like: keyword} },
+                        { id: {$like: keyword} },
+                        { site: {$like: keyword} }
+                    ]
+                }
+            ]
+        }
+        return this.findAndCount(filterQuery, {
+            limit: this.pageSize,
+            offset
+        })
+    }
 }
