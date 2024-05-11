@@ -3,9 +3,10 @@ import { Client } from 'discordx'
 
 import { generalConfig } from '@/configs'
 import { Discord, Injectable, Once, Schedule } from '@/decorators'
-import { Data } from '@/entities'
+import { Data, Plugin } from '@/entities'
 import { Database, Logger, Scheduler, Store } from '@/services'
 import { resolveDependency, syncAllGuilds } from '@/utils/functions'
+import { pluginRepoVersion } from 'src/utils/constants/plugins'
 
 @Discord()
 @Injectable()
@@ -37,6 +38,7 @@ export default class ReadyEvent {
 		// change activity
 		await this.changeActivity()
 
+		await this.refreshPlugins()
 		// update last startup time in the database
 		await this.db.get(Data).set('lastStartup', Date.now())
 
@@ -77,4 +79,12 @@ export default class ReadyEvent {
 			this.activityIndex = 0
 	}
 
+	@Schedule('*/5 * * * *')
+	async refreshPlugins(){
+		const pluginRepository = this.db.em.getRepository(Plugin);
+		const url = `https://raw.githubusercontent.com/LNReader/lnreader-plugins/plugins/v${pluginRepoVersion}/.dist/plugins.min.json`;
+		const plugins = await fetch(url).then(res => res.json());
+		await pluginRepository.upsertMany(plugins);
+		this.logger.console("Refreshed plugins");
+	}
 }
