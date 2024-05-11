@@ -47,7 +47,7 @@ export default class PluginsCommand {
             .setAuthor({
                 name: "LNReader Bot",
                 iconURL: "https://avatars.githubusercontent.com/u/81222734?s=200&v=4",
-                url: "https://github.com/LNReader/lnreader"
+                url: "https://github.com/LNReader"
             })
             .setDescription(this.buildDescription(page, plugins))
             .setFooter({text: `LNReader Plugins v${pluginRepoVersion}`})
@@ -66,5 +66,31 @@ export default class PluginsCommand {
                 (plugin, index) => `${index + 1 + (page - 1) * 10}. [**${plugin.name}**](${plugin.site})\n ${plugin.id} - v${plugin.version}`
             )
             .join('\n')
+    }
+
+    @Slash({name: 'issue'})
+    async issue(
+        @SlashChoice(...['App', 'Plugins'])
+        @SlashOption({
+            name: "repo",
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            description: "Choose repo to make issue/request"
+        })
+        repo: string,
+        interaction: CommandInteraction
+    ){
+        const link = repo === 'App' ? 'https://github.com/LNReader/lnreader/issues/new/choose'  : 'https://github.com/LNReader/lnreader-plugins/issues/new/choose'
+        const embed = new EmbedBuilder()
+            .setAuthor({
+                name: "LNReader Bot",
+                iconURL: "https://avatars.githubusercontent.com/u/81222734?s=200&v=4",
+                url: "https://github.com/LNReader"
+            })
+            .setTitle(`${repo === 'App' ? 'App' : 'Plugins'} issue / request`)
+            .setDescription(`To report an issue, click [here](${link}) and follow the instructions.`)
+        interaction.followUp({
+                embeds: [embed]
+            });
     }
 }
