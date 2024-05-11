@@ -1,7 +1,6 @@
 import { env } from '@/env'
 
 export const generalConfig: GeneralConfigType = {
-
 	name: 'LNReader Bot', // the name of your bot
 	description: '', // the description of your bot
 	defaultLocale: 'en', // default language of the bot, must be a valid locale
@@ -13,7 +12,7 @@ export const generalConfig: GeneralConfigType = {
 
 	// useful links
 	links: {
-		invite: 'https://discord.com/oauth2/authorize?client_id=1238700375956131841&permissions=412317182016&scope=bot',
+		invite: 'https://discord.com/oauth2/authorize?client_id=1238700375956131841&permissions=412317252672&scope=applications.commands+bot',
 		supportServer: 'https://discord.gg/QdcWN4MD63',
 		gitRemoteRepo: 'https://github.com/LNReader/lnreader',
 	},
@@ -29,7 +28,7 @@ export const generalConfig: GeneralConfigType = {
 			type: 'PLAYING',
 		},
 		{
-			text: 'LNReader is using TTS',
+			text: 'LNReader TTS',
 			type: 'LISTENING',
 		},
 	],
