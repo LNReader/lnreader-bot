@@ -4,7 +4,7 @@ import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "
 import { Discord } from "discordx";
 
 @Discord()
-@Category('General')
+@Category('LNReader')
 export default class DataHelperCommand {
     @Slash({name: 'migrate'})
     async migrate(
@@ -12,7 +12,8 @@ export default class DataHelperCommand {
         @SlashOption({
             name: 'version',
             description: 'Your current version',
-            type: ApplicationCommandOptionType.String
+            type: ApplicationCommandOptionType.String,
+            localizationSource: 'COMMANDS.MIGRATE.DESCRIPTION'
         })
         version: string,
         interaction: CommandInteraction

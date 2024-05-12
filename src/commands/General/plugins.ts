@@ -8,7 +8,7 @@ import { Plugin } from "@/entities";
 import { pluginRepoVersion } from "@/utils/constants/plugins";
 
 @Discord()
-@Category('General')
+@Category('LNReader')
 @Injectable()
 export default class PluginsCommand {
     constructor(
@@ -21,7 +21,8 @@ export default class PluginsCommand {
             description: "Filter plugins with language",
             name: 'language',
             type: ApplicationCommandOptionType.String,
-            required: false
+            required: false,
+            localizationSource: 'COMMANDS.PLUGINS.DESCRIPTION'
         })
         language: string,
         @SlashOption({
@@ -74,7 +75,8 @@ export default class PluginsCommand {
             name: "repo",
             type: ApplicationCommandOptionType.String,
             required: true,
-            description: "Choose repo to make issue/request"
+            description: "Choose repo to make issue/request",
+            localizationSource: 'COMMANDS.ISSUE.DESCRIPTION'
         })
         repo: string,
         interaction: CommandInteraction

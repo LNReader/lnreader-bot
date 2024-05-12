@@ -171,6 +171,24 @@ type RootTranslation = {
 			 */
 			MESSAGE: RequiredParams<'heartbeat' | 'member' | 'time'>
 		}
+		PLUGINS: {
+			/**
+			 * P​l​u​g​i​n​s​ ​i​n​f​o
+			 */
+			DESCRIPTION: string
+		}
+		ISSUE: {
+			/**
+			 * R​e​p​o​r​t​ ​i​s​s​u​e​/​r​e​q​u​e​s​t
+			 */
+			DESCRIPTION: string
+		}
+		MIGRATE: {
+			/**
+			 * M​i​g​r​a​t​i​o​n​ ​h​e​l​p​e​r
+			 */
+			DESCRIPTION: string
+		}
 	}
 }
 
@@ -321,6 +339,24 @@ export type TranslationFunctions = {
 			 * {member} Pong! The message round-trip took {time}ms.{heartbeat}
 			 */
 			MESSAGE: (arg: { heartbeat: string, member: string, time: number }) => LocalizedString
+		}
+		PLUGINS: {
+			/**
+			 * Plugins info
+			 */
+			DESCRIPTION: () => LocalizedString
+		}
+		ISSUE: {
+			/**
+			 * Report issue/request
+			 */
+			DESCRIPTION: () => LocalizedString
+		}
+		MIGRATE: {
+			/**
+			 * Migration helper
+			 */
+			DESCRIPTION: () => LocalizedString
 		}
 	}
 }

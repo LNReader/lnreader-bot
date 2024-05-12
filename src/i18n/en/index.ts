@@ -65,6 +65,15 @@ const en = {
 			DESCRIPTION: 'Pong!',
 			MESSAGE: '{member:string} Pong! The message round-trip took {time:number}ms.{heartbeat:string}',
 		},
+		PLUGINS: {
+			DESCRIPTION: 'Plugins info',
+		},
+		ISSUE: {
+			DESCRIPTION: 'Report issue/request',
+		},
+		MIGRATE: {
+			DESCRIPTION: 'Migration helper',
+		},
 	},
 } satisfies BaseTranslation
 
