@@ -5,7 +5,7 @@
             "script": "npm",
             "args" : "run build:start",
             "watch": true,
-            "ignore_watch" : ["node_modules", "build", "logs"],
+            "ignore_watch" : ["node_modules", "build", "logs", "database"],
              "watch_options": {
                  "followSymlinks": false
              }
