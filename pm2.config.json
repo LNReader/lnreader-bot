@@ -1,9 +1,14 @@
 {
     "apps": [
         {
-            "name": "My Discord Bot",
+            "name": "LNReader-Bot",
             "script": "npm",
-            "args" : "run build:start"
+            "args" : "run build:start",
+            "watch": true,
+            "ignore_watch" : ["node_modules", "build", "logs", "database"],
+             "watch_options": {
+                 "followSymlinks": false
+             }
         }
     ]
 }
