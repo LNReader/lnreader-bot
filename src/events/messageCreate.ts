@@ -15,7 +15,7 @@ export default class MessageCreateEvent {
 		client: Client
 	) {
 		if(message.content === 'nyagami onii-chan'){
-			message.reply('<@703930445502480384> This imouto-chan need your help, onii-chan!');
+			message.reply('This imouto-chan need your help, <@703930445502480384> onii-chan!');
 		}
 		await client.executeCommand(message, false)
 	}
