@@ -16,14 +16,6 @@ export default class PluginsCommand {
 	) {}
     @Slash({name: 'plugins'})
     async plugins(
-        @SlashOption({
-            description: 'Page of request',
-            name: 'page',
-            type: ApplicationCommandOptionType.Integer,
-            required: true,
-            minValue: 1,
-        })
-        page: number,
         @SlashChoice(...Object.values(languages))
         @SlashOption({
             description: "Filter plugins with language",
@@ -38,6 +30,13 @@ export default class PluginsCommand {
             type: ApplicationCommandOptionType.String
         })
         keyword: string,
+        @SlashOption({
+            description: 'Page of request',
+            name: 'page',
+            type: ApplicationCommandOptionType.Integer,
+            minValue: 1,
+        })
+        page: number = 1,
         interaction: CommandInteraction
     ) {
         const pluginRepository = this.db.em.getRepository(Plugin)
