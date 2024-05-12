@@ -3,7 +3,8 @@
         {
             "name": "LNReader Bot",
             "script": "npm",
-            "args" : "run build:start"
+            "args" : "run build:start",
+            "watch": true
         }
     ]
 }
