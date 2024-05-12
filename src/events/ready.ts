@@ -6,7 +6,7 @@ import { Discord, Injectable, Once, Schedule } from '@/decorators'
 import { Data, Plugin } from '@/entities'
 import { Database, Logger, Scheduler, Store } from '@/services'
 import { resolveDependency, syncAllGuilds } from '@/utils/functions'
-import { pluginRepoVersion } from 'src/utils/constants/plugins'
+import { pluginRepoVersion } from '@/utils/constants/plugins'
 
 @Discord()
 @Injectable()
