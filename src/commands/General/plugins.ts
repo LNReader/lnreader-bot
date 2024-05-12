@@ -5,7 +5,7 @@ import { Discord } from "discordx";
 import { languages } from "./utils/language";
 import { Database } from "@/services";
 import { Plugin } from "@/entities";
-import { pluginRepoVersion } from "src/utils/constants/plugins";
+import { pluginRepoVersion } from "@/utils/constants/plugins";
 
 @Discord()
 @Category('General')

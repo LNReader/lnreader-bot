@@ -20,7 +20,8 @@
 
 		"baseUrl": ".",
 		"paths": {
-
+			"@/utils/constants": ["src/utils/constants"],
+			"@/utils/constants/*": ["src/utils/constants/*"],
 			"@/decorators": ["src/utils/decorators"],
 			"@/decorators/*": ["src/plugins/*/utils/decorators"],
 
