@@ -1,10 +1,14 @@
 {
     "apps": [
         {
-            "name": "LNReader Bot",
+            "name": "LNReader-Bot",
             "script": "npm",
             "args" : "run build:start",
-            "watch": true
+            "watch": true,
+            "ignore_watch" : ["node_modules", "build"],
+             "watch_options": {
+                 "followSymlinks": false
+             }
         }
     ]
 }
