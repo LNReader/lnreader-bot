@@ -11,7 +11,7 @@ export default class DataHelperCommand {
         @SlashChoice(...['v1.1.19', 'v2.0.0-beta.1'])
         @SlashOption({
             name: 'version',
-            description: 'Version to be migrated',
+            description: 'Your current version',
             type: ApplicationCommandOptionType.String
         })
         version: string,
