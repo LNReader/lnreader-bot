@@ -23,7 +23,7 @@ export default class DataHelperCommand {
             instructions = `
 1. Create v1.1.9 backup
 2. Uninstall the current app
-3. Download converted file from https://lnreader.github.io/plugins-migration/
+3. Download converted file from https://lnreader.github.io/guides/upgrade
 4. Install beta
 5. Clear app data
 6. Download required plugins

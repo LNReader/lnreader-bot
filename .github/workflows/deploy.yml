@@ -21,16 +21,16 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
-          # PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
+          timeout: 1m
+          debug: true
           host: ${{ secrets.IP }}
           username: ${{ secrets.USERNAME }}
-          # password: ${{ secrets.PASSWORD }}
           key: ${{ secrets.KEY }}
-          # passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           envs: PROJECT_PATH
           script: |
+            whoami
             cd $PROJECT_PATH
             git pull
             npm i
