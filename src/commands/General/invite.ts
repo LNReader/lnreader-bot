@@ -27,7 +27,7 @@ export default class InviteCommand {
 			.setFooter({ text: 'LNReader' })
 
 		interaction.followUp({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		})
 	}
 

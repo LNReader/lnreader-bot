@@ -132,7 +132,7 @@ export default class InfoCommand {
 
 		// finally send the embed
 		interaction.followUp({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components: [{type: ComponentType.Button, ...row}],
 		})
 	}

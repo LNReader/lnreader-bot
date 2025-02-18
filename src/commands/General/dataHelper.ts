@@ -40,7 +40,7 @@ export default class DataHelperCommand {
             })
             .setTitle(`Migration from ${version} instructions`)
         interaction.followUp({
-            embeds: [embed]
+            embeds: [embed.toJSON()]
         })
     }
 }

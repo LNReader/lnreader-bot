@@ -30,7 +30,7 @@ export default class HelpCommand {
 		components.push(this.getSelectDropdown('categories', localize).toJSON())
 
 		interaction.followUp({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components,
 		})
 	}
@@ -46,7 +46,7 @@ export default class HelpCommand {
 		components.push(this.getSelectDropdown(category, localize).toJSON())
 
 		interaction.update({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components,
 		})
 	}

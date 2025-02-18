@@ -53,7 +53,7 @@ export default class PluginsCommand {
             .setFooter({text: `LNReader Plugins v${pluginRepoVersion}`})
             .setTitle(`Page: ${page}/${totalPages} - Lang: ${language || 'All'}${keyword ? ' - ' + keyword : ''}`)
         interaction.followUp({
-            embeds: [embed]
+            embeds: [embed.toJSON()]
         });
     }
 
@@ -91,7 +91,7 @@ export default class PluginsCommand {
             .setTitle(`${repo === 'App' ? 'App' : 'Plugins'} issue / request`)
             .setDescription(`To report an issue, click [here](${link}) and follow the instructions.`)
         interaction.followUp({
-                embeds: [embed]
+                embeds: [embed.toJSON()]
             });
     }
 }
