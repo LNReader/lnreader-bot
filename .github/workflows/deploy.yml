@@ -34,4 +34,5 @@ jobs:
             cd $PROJECT_PATH
             git pull
             npm i
+            npm run migration:up
             npm run build

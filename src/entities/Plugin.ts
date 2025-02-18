@@ -24,6 +24,12 @@ export class Plugin {
 
     @Property()
     iconUrl: string;
+
+    @Property({nullable: true})
+    customCSS?: string;
+
+    @Property({nullable: true})
+    customJS?: string;
 }
 
 export class PluginRepository extends EntityRepository<Plugin> {

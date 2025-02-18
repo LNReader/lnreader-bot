@@ -365,6 +365,24 @@
           "primary": false,
           "nullable": false,
           "mappedType": "text"
+        },
+        "custom_css": {
+          "name": "custom_css",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
+        },
+        "custom_js": {
+          "name": "custom_js",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
         }
       },
       "name": "plugin",
