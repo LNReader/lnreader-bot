@@ -9,6 +9,7 @@ import { CustomBaseEntity } from './BaseEntity'
 
 @Entity({ customRepository: () => GuildRepository })
 export class Guild extends CustomBaseEntity {
+
 	[EntityRepositoryType]?: GuildRepository
 
 	@PrimaryKey({ autoincrement: false })
@@ -22,6 +23,7 @@ export class Guild extends CustomBaseEntity {
 
 	@Property()
 	lastInteract: Date = new Date()
+
 }
 
 // ===========================================
@@ -29,6 +31,7 @@ export class Guild extends CustomBaseEntity {
 // ===========================================
 
 export class GuildRepository extends EntityRepository<Guild> {
+
 	async updateLastInteract(guildId?: string): Promise<void> {
 		const guild = await this.findOne({ id: guildId })
 
@@ -41,4 +44,5 @@ export class GuildRepository extends EntityRepository<Guild> {
 	async getActiveGuilds() {
 		return this.find({ deleted: false })
 	}
+
 }

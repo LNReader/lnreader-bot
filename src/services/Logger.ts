@@ -37,19 +37,20 @@ const defaultConsole = { ...console }
 
 @Service()
 export class Logger {
+
 	private readonly logPath: string = path.join(__dirname, '..', '..', 'logs')
 	private readonly logArchivePath: string = path.join(this.logPath, 'archives')
 
 	private readonly levels = ['info', 'warn', 'error'] as const
 	private embedLevelBuilder = {
 		info: (message: string): BaseMessageOptions => ({
-			embeds: [{ title: 'INFO', description: message, color: 0x007fe7, timestamp: new Date().toISOString() }],
+			embeds: [{ title: 'INFO', description: message, color: 0x007FE7, timestamp: new Date().toISOString() }],
 		}),
 		warn: (message: string): BaseMessageOptions => ({
-			embeds: [{ title: 'WARN', description: message, color: 0xf37100, timestamp: new Date().toISOString() }],
+			embeds: [{ title: 'WARN', description: message, color: 0xF37100, timestamp: new Date().toISOString() }],
 		}),
 		error: (message: string): BaseMessageOptions => ({
-			embeds: [{ title: 'ERROR', description: message, color: 0x7c1715, timestamp: new Date().toISOString() }],
+			embeds: [{ title: 'ERROR', description: message, color: 0x7C1715, timestamp: new Date().toISOString() }],
 		}),
 	}
 
@@ -341,7 +342,7 @@ export class Logger {
 								inline: true,
 							},
 						],
-						color: 0xdb5c21,
+						color: 0xDB5C21,
 						timestamp: new Date().toISOString(),
 					},
 				],
@@ -368,7 +369,7 @@ export class Logger {
 						thumbnail: {
 							url: user.displayAvatarURL({ forceStatic: false }),
 						},
-						color: 0x83dd80,
+						color: 0x83DD80,
 						timestamp: new Date().toISOString(),
 						footer: {
 							text: user.id,
@@ -385,8 +386,8 @@ export class Logger {
 	 * @param guildId
 	 */
 	logGuild(type: 'NEW_GUILD' | 'DELETE_GUILD' | 'RECOVER_GUILD', guildId: string) {
-		const additionalMessage =
-			type === 'NEW_GUILD'
+		const additionalMessage
+			= type === 'NEW_GUILD'
 				? 'has been added to the db'
 				: type === 'DELETE_GUILD'
 					? 'has been deleted'
@@ -394,7 +395,7 @@ export class Logger {
 						? 'has been recovered'
 						: ''
 
-		resolveDependency(Client).then(async client => {
+		resolveDependency(Client).then(async (client) => {
 			const guild = await client.guilds.fetch(guildId).catch(() => null)
 
 			const message = `(${type}) Guild ${guild ? `${guild.name} (${guildId})` : guildId} ${additionalMessage}`
@@ -431,7 +432,7 @@ export class Logger {
 							thumbnail: {
 								url: guild?.iconURL() ?? '',
 							},
-							color: type === 'NEW_GUILD' ? 0x02fd77 : type === 'DELETE_GUILD' ? 0xff0000 : 0xfffb00,
+							color: type === 'NEW_GUILD' ? 0x02FD77 : type === 'DELETE_GUILD' ? 0xFF0000 : 0xFFFB00,
 							timestamp: new Date().toISOString(),
 						},
 					],
@@ -487,7 +488,7 @@ export class Logger {
 						{
 							title: embedTitle.length >= 256 ? `${embedTitle.substring(0, 252)}...` : embedTitle,
 							description: embedMessage,
-							color: 0x7c1715,
+							color: 0x7C1715,
 							timestamp: new Date().toISOString(),
 						},
 					],
@@ -665,4 +666,5 @@ export class Logger {
 			true
 		)
 	}
+
 }

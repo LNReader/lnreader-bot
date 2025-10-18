@@ -24,6 +24,7 @@ const links = [
 @Injectable()
 @Category('General')
 export default class InfoCommand {
+
 	constructor(private stats: Stats) {}
 
 	@Slash({
@@ -55,7 +56,7 @@ export default class InfoCommand {
 			])
 
 		const buttons = links
-			.map(link => {
+			.map((link) => {
 				const url = link.url.split('_').join('')
 				if (isValidUrl(url)) {
 					return new ButtonBuilder().setLabel(link.label).setURL(url).setStyle(ButtonStyle.Link)
@@ -76,4 +77,5 @@ export default class InfoCommand {
 			components,
 		})
 	}
+
 }

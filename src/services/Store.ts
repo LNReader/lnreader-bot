@@ -25,7 +25,9 @@ const initialState: State = {
 	keepInstanceAfterHmr: true,
 })
 export class Store extends RxStore<State> {
+
 	constructor() {
 		super(initialState)
 	}
+
 }

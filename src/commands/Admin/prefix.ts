@@ -14,6 +14,7 @@ import { resolveGuild, simpleSuccessEmbed } from '@/utils/functions'
 @Injectable()
 @Category('Admin')
 export default class PrefixCommand {
+
 	constructor(private db: Database) {}
 
 	@Slash({
@@ -51,4 +52,5 @@ export default class PrefixCommand {
 			throw new UnknownReplyError(interaction)
 		}
 	}
+
 }

@@ -11,6 +11,7 @@ import { syncUser } from '@/utils/functions'
 @Discord()
 @Injectable()
 export default class InteractionCreateEvent {
+
 	constructor(
 		private stats: Stats,
 		private logger: Logger,
@@ -37,4 +38,5 @@ export default class InteractionCreateEvent {
 
 		client.executeInteraction(interaction)
 	}
+
 }

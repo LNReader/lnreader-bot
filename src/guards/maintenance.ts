@@ -9,9 +9,9 @@ import { isDev, isInMaintenance, replyToInteraction, resolveUser } from '@/utils
  */
 export const Maintenance: GuardFunction<ArgsOf<'messageCreate' | 'interactionCreate'>> = async (arg, client, next) => {
 	if (
-		arg instanceof CommandInteraction ||
-		arg instanceof SimpleCommandMessage ||
-		arg instanceof ContextMenuCommandInteraction
+		arg instanceof CommandInteraction
+		|| arg instanceof SimpleCommandMessage
+		|| arg instanceof ContextMenuCommandInteraction
 	) {
 		const user = resolveUser(arg)
 		const maintenance = await isInMaintenance()

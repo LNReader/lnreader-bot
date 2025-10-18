@@ -6,6 +6,7 @@ import { BaseError } from '@/utils/classes'
 
 @Service()
 export class ErrorHandler {
+
 	constructor(private logger: Logger) {
 		// Catch all exceptions
 		process.on('uncaughtException', (error: Error, origin: string) => {
@@ -28,4 +29,5 @@ export class ErrorHandler {
 			this.logger.logError(error, 'unhandledRejection')
 		})
 	}
+
 }

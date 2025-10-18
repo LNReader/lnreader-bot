@@ -6,6 +6,7 @@ import { resolveDependencies } from '@/utils/functions'
 
 @Middleware()
 export class BotOnline {
+
 	private client: Client
 
 	constructor() {
@@ -17,4 +18,5 @@ export class BotOnline {
 	async use() {
 		if (this.client.user?.presence.status === 'offline') throw new InternalServerError('Bot is offline')
 	}
+
 }

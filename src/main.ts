@@ -33,7 +33,7 @@ async function loadFiles(path: string): Promise<void> {
 	const files = await resolve(path)
 	await Promise.all(
 		// eslint-disable-next-line array-callback-return
-		files.map(file => {
+		files.map((file) => {
 			const newFileName = file.replace('file://', '')
 			delete require.cache[newFileName]
 			import(newFileName)
@@ -169,7 +169,7 @@ async function init() {
 				}
 
 				const store = await container.resolve(Store)
-				store.select('ready').subscribe(async ready => {
+				store.select('ready').subscribe(async (ready) => {
 					// check that all properties that are not null are set to true
 					if (
 						Object.values(ready)
@@ -181,7 +181,7 @@ async function init() {
 					}
 				})
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err)
 				process.exit(1)
 			})

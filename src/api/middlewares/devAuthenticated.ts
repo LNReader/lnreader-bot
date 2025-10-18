@@ -15,10 +15,11 @@ const timeout = 10 * 60 * 1000
 
 @Middleware()
 export class DevAuthenticated {
+
 	private store: Store
 
 	constructor() {
-		resolveDependency(Store).then(store => {
+		resolveDependency(Store).then((store) => {
 			this.store = store
 		})
 	}
@@ -56,8 +57,7 @@ export class DevAuthenticated {
 				this.store.update('authorizedAPITokens', authorizedAPITokens => [...authorizedAPITokens, token])
 				setTimeout(() => {
 					this.store.update('authorizedAPITokens', authorizedAPITokens =>
-						authorizedAPITokens.filter(t => t !== token)
-					)
+						authorizedAPITokens.filter(t => t !== token))
 				}, timeout)
 			} else {
 				throw new Unauthorized('Unauthorized')
@@ -66,4 +66,5 @@ export class DevAuthenticated {
 			throw new BadRequest('Invalid discord token')
 		}
 	}
+
 }

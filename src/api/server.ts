@@ -13,6 +13,7 @@ import { Database, PluginsManager, Store } from '@/services'
 
 @Service()
 export class Server {
+
 	@Inject() app: PlatformApplication
 
 	orm: MikroORM
@@ -61,4 +62,5 @@ export class Server {
 			this.store.update('ready', e => ({ ...e, api: true }))
 		})
 	}
+
 }

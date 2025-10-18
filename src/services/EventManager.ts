@@ -3,6 +3,7 @@ import { Logger } from '@/services'
 
 @Service()
 export class EventManager {
+
 	private _events: Map<string, Function[]> = new Map()
 
 	constructor(private logger: Logger) {}
@@ -26,4 +27,5 @@ export class EventManager {
 			}
 		}
 	}
+
 }

@@ -7,6 +7,7 @@ import { Slash, SlashChoice, SlashOption } from '@/decorators'
 @Discord()
 @Category('LNReader')
 export default class DataHelperCommand {
+
 	@Slash({
 		name: 'migrate',
 		description: 'Get step-by-step migration instructions for upgrading LNReader',
@@ -25,7 +26,7 @@ export default class DataHelperCommand {
 	) {
 		let title = `Migrating from ${version}`
 		let description = ''
-		let color = 0x5865f2
+		let color = 0x5865F2
 
 		if (version === 'v1.1.19') {
 			title = `Migrating from ${version} to v2.0.0`
@@ -40,14 +41,14 @@ export default class DataHelperCommand {
 			description += `**7.** Bypass Cloudflare for plugins if needed\n`
 			description += `**8.** Restore from the converted backup (Legacy Restore)\n`
 			description += `**Note:** Make sure to keep your backup safe until migration is complete!`
-			color = 0xffa500 // Orange for important migration
+			color = 0xFFA500 // Orange for important migration
 		} else if (version === 'v2.0.0-beta.1') {
 			title = `Migrating from ${version}`
 			description = `Good news! You're already on v2.0.0 or newer.\n`
 			description += `**To update to the latest version:**\n`
 			description += `Simply download and install the latest release from the GitHub releases page or our website.\n`
 			description += `Your data will be preserved automatically. No special migration needed!`
-			color = 0x57f287 // Green for easy migration
+			color = 0x57F287 // Green for easy migration
 		}
 
 		const embed = new EmbedBuilder().setTitle(title).setDescription(description).setColor(color)
@@ -56,4 +57,5 @@ export default class DataHelperCommand {
 			embeds: [embed.toJSON()],
 		})
 	}
+
 }

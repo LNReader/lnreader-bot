@@ -90,11 +90,11 @@ const resolvers = {
 	action: {
 		ChatInputCommandInteraction: (interaction: ChatInputCommandInteraction) => {
 			return (
-				interaction.commandName +
-				(interaction?.options.getSubcommandGroup(false)
+				interaction.commandName
+				+ (interaction?.options.getSubcommandGroup(false)
 					? ` ${interaction.options.getSubcommandGroup(false)}`
-					: '') +
-				(interaction?.options.getSubcommand(false) ? ` ${interaction.options.getSubcommand(false)}` : '')
+					: '')
+					+ (interaction?.options.getSubcommand(false) ? ` ${interaction.options.getSubcommand(false)}` : '')
 			)
 		},
 		SimpleCommandMessage: (interaction: SimpleCommandMessage) => interaction.name,
@@ -127,8 +127,8 @@ export function resolveUser(
 	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
 ) {
 	return (
-		resolvers.user[getTypeOfInteraction(interaction) as keyof typeof resolvers.user]?.(interaction) ||
-		resolvers.user.fallback(interaction)
+		resolvers.user[getTypeOfInteraction(interaction) as keyof typeof resolvers.user]?.(interaction)
+		|| resolvers.user.fallback(interaction)
 	)
 }
 
@@ -136,8 +136,8 @@ export function resolveMember(
 	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
 ) {
 	return (
-		resolvers.member[getTypeOfInteraction(interaction) as keyof typeof resolvers.member]?.(interaction) ||
-		resolvers.member.fallback(interaction)
+		resolvers.member[getTypeOfInteraction(interaction) as keyof typeof resolvers.member]?.(interaction)
+		|| resolvers.member.fallback(interaction)
 	)
 }
 
@@ -145,36 +145,36 @@ export function resolveGuild(
 	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
 ) {
 	return (
-		resolvers.guild[getTypeOfInteraction(interaction) as keyof typeof resolvers.guild]?.(interaction) ||
-		resolvers.guild.fallback(interaction)
+		resolvers.guild[getTypeOfInteraction(interaction) as keyof typeof resolvers.guild]?.(interaction)
+		|| resolvers.guild.fallback(interaction)
 	)
 }
 
 export function resolveChannel(interaction: AllInteractions) {
 	return (
-		resolvers.channel[getTypeOfInteraction(interaction) as keyof typeof resolvers.channel]?.(interaction) ||
-		resolvers.channel.fallback(interaction)
+		resolvers.channel[getTypeOfInteraction(interaction) as keyof typeof resolvers.channel]?.(interaction)
+		|| resolvers.channel.fallback(interaction)
 	)
 }
 
 export function resolveCommandName(interaction: CommandInteraction | SimpleCommandMessage) {
 	return (
-		resolvers.commandName[interaction.constructor.name as keyof typeof resolvers.commandName]?.(interaction) ||
-		resolvers.commandName.fallback(interaction)
+		resolvers.commandName[interaction.constructor.name as keyof typeof resolvers.commandName]?.(interaction)
+		|| resolvers.commandName.fallback(interaction)
 	)
 }
 
 export function resolveAction(interaction: AllInteractions) {
 	return (
-		resolvers.action[getTypeOfInteraction(interaction) as keyof typeof resolvers.action]?.(interaction) ||
-		resolvers.action.fallback(interaction)
+		resolvers.action[getTypeOfInteraction(interaction) as keyof typeof resolvers.action]?.(interaction)
+		|| resolvers.action.fallback(interaction)
 	)
 }
 
 export function resolveLocale(interaction: AllInteractions) {
 	return (
-		resolvers.locale[getTypeOfInteraction(interaction) as keyof typeof resolvers.locale]?.(interaction) ||
-		resolvers.locale.fallback(interaction)
+		resolvers.locale[getTypeOfInteraction(interaction) as keyof typeof resolvers.locale]?.(interaction)
+		|| resolvers.locale.fallback(interaction)
 	)
 }
 

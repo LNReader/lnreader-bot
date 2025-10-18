@@ -14,6 +14,7 @@ import { resolveDependency } from '@/utils/functions'
 
 @Service()
 export class Database {
+
 	private _orm: MikroORM<DatabaseDriver>
 
 	constructor(
@@ -78,14 +79,14 @@ export class Database {
 
 		if (!databaseConfig.backup.enabled && !snapshotName) return false
 		if (!this.isSQLiteDatabase()) {
-			this.logger.log("Database is not SQLite, couldn't backup")
+			this.logger.log('Database is not SQLite, couldn\'t backup')
 
 			return false
 		}
 
 		const backupPath = databaseConfig.backup.path
 		if (!backupPath) {
-			this.logger.log("Backup path not set, couldn't backup", 'error', true)
+			this.logger.log('Backup path not set, couldn\'t backup', 'error', true)
 
 			return false
 		}
@@ -113,13 +114,13 @@ export class Database {
 	 */
 	async restore(snapshotName: string): Promise<boolean> {
 		if (!this.isSQLiteDatabase()) {
-			this.logger.log("Database is not SQLite, couldn't restore", 'error')
+			this.logger.log('Database is not SQLite, couldn\'t restore', 'error')
 
 			return false
 		}
 
 		const backupPath = databaseConfig.backup.path
-		if (!backupPath) this.logger.log("Backup path not set, couldn't restore", 'error', true)
+		if (!backupPath) this.logger.log('Backup path not set, couldn\'t restore', 'error', true)
 
 		try {
 			console.debug(mikroORMConfig[env.NODE_ENV]!.dbName!)
@@ -131,7 +132,7 @@ export class Database {
 			return true
 		} catch (error) {
 			console.debug(error)
-			this.logger.log("Snapshot file not found, couldn't restore", 'error', true)
+			this.logger.log('Snapshot file not found, couldn\'t restore', 'error', true)
 
 			return false
 		}
@@ -140,7 +141,7 @@ export class Database {
 	getBackupList(): string[] | null {
 		const backupPath = databaseConfig.backup.path
 		if (!backupPath) {
-			this.logger.log("Backup path not set, couldn't get list of backups", 'error')
+			this.logger.log('Backup path not set, couldn\'t get list of backups', 'error')
 
 			return null
 		}
@@ -180,4 +181,5 @@ export class Database {
 		if (type) return ['sqlite', 'better-sqlite'].includes(type)
 		else return false
 	}
+
 }

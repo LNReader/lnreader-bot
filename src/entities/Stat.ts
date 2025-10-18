@@ -7,6 +7,7 @@ import { EntityRepository } from '@mikro-orm/sqlite'
 
 @Entity({ customRepository: () => StatRepository })
 export class Stat {
+
 	[EntityRepositoryType]?: StatRepository
 
 	@PrimaryKey()
@@ -23,6 +24,7 @@ export class Stat {
 
 	@Property()
 	createdAt: Date = new Date()
+
 }
 
 // ===========================================

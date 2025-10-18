@@ -36,7 +36,7 @@ type Union<L extends unknown | undefined, R extends unknown | undefined> = L ext
 type NestedPaths<
 	T extends GenericObject,
 	Prev extends Primitive | undefined = undefined,
-	Path extends Primitive | undefined = undefined,
+	Path extends Primitive | undefined = undefined
 > = {
 	[K in keyof T]: T[K] extends GenericObject
 		? NestedPaths<T[K], Union<Prev, Path>, Join<Path, K>>
@@ -52,7 +52,7 @@ type NestedPaths<
  */
 type TypeFromPath<
 	T extends GenericObject,
-	Path extends string, // Or, if you prefer, NestedPaths<T>
+	Path extends string // Or, if you prefer, NestedPaths<T>
 > = {
 	[K in Path]: K extends keyof T
 		? T[K]

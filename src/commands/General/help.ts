@@ -16,6 +16,7 @@ import { chunkArray, getColor, resolveGuild, validString } from '@/utils/functio
 @Discord()
 @Category('General')
 export default class HelpCommand {
+
 	private readonly _categories: Map<string, CommandCategory[]> = new Map()
 
 	constructor() {
@@ -87,7 +88,7 @@ export default class HelpCommand {
 			]
 
 			for (const category of this._categories) {
-				const commands = category[1].map(cmd => {
+				const commands = category[1].map((cmd) => {
 					return `</${cmd.group ? `${cmd.group} ` : ''}${cmd.subgroup ? `${cmd.subgroup} ` : ''}${cmd.name}:${
 						applicationCommands.find(acmd => acmd.name === (cmd.group ? cmd.group : cmd.name))!.id
 					}>`
@@ -185,4 +186,5 @@ export default class HelpCommand {
 			}
 		}
 	}
+
 }

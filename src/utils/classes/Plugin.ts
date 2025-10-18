@@ -11,6 +11,7 @@ import { BaseController } from '@/utils/classes'
 import { getSourceCodeLocation, getTscordVersion } from '@/utils/functions'
 
 export class Plugin {
+
 	// Common values
 	private _path: string
 	private _name: string
@@ -146,4 +147,5 @@ export class Plugin {
 	get translations() {
 		return this._translations
 	}
+
 }

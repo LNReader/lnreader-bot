@@ -23,7 +23,7 @@ export function Schedule(cronExpression: string, jobName?: string) {
 
 		const job = new CronJob(cronExpression, descriptor.value, null, false, generalConfig.timezone, target)
 
-		import('@/services').then(async services => {
+		import('@/services').then(async (services) => {
 			const scheduler = await resolveDependency(services.Scheduler)
 			scheduler.addJob(jobName ?? propertyKey, job)
 		})

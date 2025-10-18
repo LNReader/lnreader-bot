@@ -14,11 +14,11 @@ import { getLocaleFromInteraction, L } from '@/i18n'
  */
 export const ExtractLocale: GuardFunction<Interaction> = async (interaction, client, next, guardData) => {
 	if (
-		interaction instanceof SimpleCommandMessage ||
-		interaction instanceof CommandInteraction ||
-		interaction instanceof ContextMenuCommandInteraction ||
-		interaction instanceof StringSelectMenuInteraction ||
-		interaction instanceof ButtonInteraction
+		interaction instanceof SimpleCommandMessage
+		|| interaction instanceof CommandInteraction
+		|| interaction instanceof ContextMenuCommandInteraction
+		|| interaction instanceof StringSelectMenuInteraction
+		|| interaction instanceof ButtonInteraction
 	) {
 		const sanitizedLocale = getLocaleFromInteraction(interaction as AllInteractions)
 

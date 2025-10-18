@@ -13,6 +13,7 @@ import { languages } from './utils/language'
 @Category('LNReader')
 @Injectable()
 export default class PluginsCommand {
+
 	constructor(private db: Database) {}
 
 	@Slash({
@@ -61,7 +62,7 @@ export default class PluginsCommand {
 			.setTitle(title)
 			.setDescription(this.buildDescription(page, plugins, totalPlugins))
 			.setFooter({ text: `Page ${page}/${totalPages} • Plugin Repository v${pluginRepoVersion}` })
-			.setColor(0x5865f2)
+			.setColor(0x5865F2)
 
 		interaction.followUp({
 			embeds: [embed.toJSON()],
@@ -117,10 +118,11 @@ export default class PluginsCommand {
 				name: 'Report Issue',
 				value: `[${repoName}](${link})`,
 			})
-			.setColor(0x5865f2)
+			.setColor(0x5865F2)
 
 		interaction.followUp({
 			embeds: [embed.toJSON()],
 		})
 	}
+
 }

@@ -9,6 +9,7 @@ import { CustomBaseEntity } from './BaseEntity'
 
 @Entity({ customRepository: () => ImageRepository })
 export class Image extends CustomBaseEntity {
+
 	[EntityRepositoryType]?: ImageRepository
 
 	@PrimaryKey()
@@ -34,6 +35,7 @@ export class Image extends CustomBaseEntity {
 
 	@Property()
 	deleteHash: string
+
 }
 
 // ===========================================
@@ -41,6 +43,7 @@ export class Image extends CustomBaseEntity {
 // ===========================================
 
 export class ImageRepository extends EntityRepository<Image> {
+
 	async findByTags(tags: string[], explicit: boolean = true): Promise<Image[]> {
 		const rows = await this.find({
 			$and: tags.map(tag => ({ tags: new RegExp(tag) })),
@@ -48,4 +51,5 @@ export class ImageRepository extends EntityRepository<Image> {
 
 		return explicit ? rows.filter(row => row.tags.length === tags.length) : rows
 	}
+
 }

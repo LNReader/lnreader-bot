@@ -13,6 +13,7 @@ import { formatDate, resolveDependencies } from '@/utils/functions'
 @UseBefore(DevAuthenticated)
 @Injectable()
 export class DatabaseController extends BaseController {
+
 	private db: Database
 
 	constructor() {
@@ -36,7 +37,7 @@ export class DatabaseController extends BaseController {
 				},
 			}
 		} else {
-			throw new InternalServerError("Couldn't generate backup, see the logs for more information")
+			throw new InternalServerError('Couldn\'t generate backup, see the logs for more information')
 		}
 	}
 
@@ -45,22 +46,23 @@ export class DatabaseController extends BaseController {
 		const success = await this.db.restore(snapshotName)
 
 		if (success) return { message: 'Backup restored' }
-		else throw new InternalServerError("Couldn't restore backup, see the logs for more information")
+		else throw new InternalServerError('Couldn\'t restore backup, see the logs for more information')
 	}
 
 	@Get('/backups')
 	async getBackups() {
 		const backupPath = databaseConfig.backup.path
-		if (!backupPath) throw new InternalServerError("Backup path not set, couldn't find backups")
+		if (!backupPath) throw new InternalServerError('Backup path not set, couldn\'t find backups')
 
 		const backupList = this.db.getBackupList()
 
 		if (backupList) return backupList
-		else throw new InternalServerError("Couldn't get backup list, see the logs for more information")
+		else throw new InternalServerError('Couldn\'t get backup list, see the logs for more information')
 	}
 
 	@Get('/size')
 	async size() {
 		return await this.db.getSize()
 	}
+
 }

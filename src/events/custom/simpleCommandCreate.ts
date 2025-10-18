@@ -9,6 +9,7 @@ import { getPrefixFromMessage, syncUser } from '@/utils/functions'
 @Discord()
 @Injectable()
 export default class SimpleCommandCreateEvent {
+
 	constructor(
 		private stats: Stats,
 		private logger: Logger,
@@ -50,4 +51,5 @@ export default class SimpleCommandCreateEvent {
 			this.eventManager.emit('simpleCommandCreate', command)
 		}
 	}
+
 }
