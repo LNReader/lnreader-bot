@@ -1,80 +1,63 @@
-# This dockerfile has multiple stages in order
-# to optimize the build process time and reduce 
-# the final image size.
+# Multi-stage build for lnreader-bot
 
-# ============================
-# ==== Dependencies stage ====
-# ============================
+# Build stage
+FROM node:20-slim AS builder
 
-FROM node:20.11-alpine as dependencies
+# Install build dependencies for native modules
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-    WORKDIR /app
+# Set working directory
+WORKDIR /app
 
-    COPY package.json .
-    COPY package-lock.json .
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY mikro-orm.config.ts ./
 
-    # install deps
-    RUN apk add --no-cache --virtual .build-deps alpine-sdk python3 && \
-        npm ci --silent && \
-        apk del .build-deps
+# Install dependencies
+RUN npm ci --silent
 
-# ======================
-# ===== Build stage ====
-# ======================
+# Copy source code
+COPY src ./src
 
-FROM node:20.11-alpine as builder
+# Build the application
+RUN npm run build
 
-    WORKDIR /app
+# Production stage
+FROM node:20-slim
 
-    # copy source files
-    COPY src ./src
-    COPY tsconfig.json .
+# Install runtime dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
 
-    # copy build files from dependencies stage
-    COPY --from=dependencies /app/package.json .
-    COPY --from=dependencies /app/package-lock.json .
-    COPY --from=dependencies /app/node_modules /app/node_modules
+# Set working directory
+WORKDIR /app
 
-    # install plugin dependencies
-    RUN npm run install:plugins
+# Copy package files
+COPY package*.json ./
 
-    # build the project
-    RUN npm run build
+# Install production dependencies only
+RUN npm ci --only=production --silent
 
-# ========================
-# ===== Prepare stage ====
-# ========================
+# Copy built application from builder
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/mikro-orm.config.ts ./mikro-orm.config.ts
 
-FROM node:20.11-alpine as prepare
+# Copy assets
+COPY assets ./assets
 
-    WORKDIR /app
+# Create necessary directories
+RUN mkdir -p /app/database /app/logs
 
-    # copy build files from builder stage
-    COPY --from=builder /app/build /app/build
-    COPY --from=builder /app/package.json /app/package.json
-    COPY --from=builder /app/package-lock.json /app/package-lock.json
-    COPY --from=builder /app/node_modules /app/node_modules
+# Set environment to production
+ENV NODE_ENV=production
 
-    # purge dev dependencies
-    RUN npm prune --omit=dev
-
-# =====================
-# ===== Run stage =====
-# =====================
-
-FROM node:20.11-alpine as runner
-
-    WORKDIR /app
-
-    # set production mode
-    ARG NODE_ENV=production
-    ENV NODE_ENV $NODE_ENV
-
-    # copy build files from prepare stage
-    COPY --from=prepare /app/build /app/build
-    COPY --from=prepare /app/package.json /app/package.json
-    COPY --from=prepare /app/package-lock.json /app/package-lock.json
-    COPY --from=prepare /app/node_modules /app/node_modules
-
-    # finaly start the bot
-    CMD ["npm", "run", "start"]
+# Start the bot
+CMD ["npm", "start"]

@@ -1,34 +1,20 @@
-# Don't copy these into Docker build context (faster builds)
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Node
-node_modules/
-npm-debug.log
+# Build output
+build
 
-# Environment
+# Environment variables
 .env
 .env.local
 .env.*.local
 
-# Build artifacts
-build/
-
-# Logs
-logs/
-*.log
-
-# Database (will use volume mount)
-database/
-*.sqlite
-data/
-
-# Git
-.git/
-.github/
-.gitignore
-
 # IDE
-.vscode/
-.idea/
+.vscode
+.idea
 *.swp
 *.swo
 *~
@@ -37,23 +23,39 @@ data/
 .DS_Store
 Thumbs.db
 
-# Tests
-tests/
-*.test.ts
-*.spec.ts
+# Git
+.git
+.gitignore
+.gitattributes
 
-# Documentation
-*.md
-!README.md
+# Testing
+coverage
+.nyc_output
+
+# Logs
+logs
+*.log
+
+# Database (local development only)
+database/db.sqlite
+database/backups
 
 # Docker
-.docker/
+.docker
 docker-compose.yml
+Dockerfile
 .dockerignore
 
-# CI/CD
-.github/
+# Misc
+README.md
+LICENSE
+.editorconfig
+.prettierrc
+.eslintrc*
+eslint.config.js
 
 # Railway
 railway.json
-.railwayignore
+
+# PM2
+pm2.config.json
