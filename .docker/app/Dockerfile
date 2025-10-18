@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 # This dockerfile has multiple stages in order
 # to optimize the build process time and reduce 
 # the final image size.
@@ -14,18 +13,10 @@ FROM node:20.11-alpine as dependencies
     COPY package.json .
     COPY package-lock.json .
 
-    # install build dependencies (needed for better-sqlite3 native compilation)
-    RUN apk add --no-cache --virtual .build-deps \
-        alpine-sdk \
-        python3
-
-    # install npm dependencies (including dev deps for build)
-    # Use cache mount for faster rebuilds
-    RUN --mount=type=cache,target=/root/.npm \
-        npm ci
-
-    # cleanup build dependencies
-    RUN apk del .build-deps
+    # install deps
+    RUN apk add --no-cache --virtual .build-deps alpine-sdk python3 && \
+        npm ci --silent && \
+        apk del .build-deps
 
 # ======================
 # ===== Build stage ====
