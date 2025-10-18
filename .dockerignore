@@ -3,20 +3,21 @@
 # Node
 node_modules/
 npm-debug.log
+.npm/
 
 # Environment
 .env
 .env.local
 .env.*.local
 
-# Build artifacts
+# Build artifacts (will be rebuilt in Docker)
 build/
 
-# Logs
+# Logs (use volume mount)
 logs/
 *.log
 
-# Database (will use volume mount)
+# Database (use volume mount)
 database/
 *.sqlite
 data/
@@ -32,9 +33,9 @@ data/
 *.swp
 *.swo
 *~
+.DS_Store
 
 # OS
-.DS_Store
 Thumbs.db
 
 # Tests
@@ -42,18 +43,17 @@ tests/
 *.test.ts
 *.spec.ts
 
-# Documentation
-*.md
-!README.md
-
 # Docker
 .docker/
 docker-compose.yml
 .dockerignore
+
+# Documentation (not needed at runtime)
+*.md
+!README.md
 
 # CI/CD
 .github/
 
 # Railway
 railway.json
-.railwayignore
