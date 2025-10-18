@@ -32,7 +32,6 @@ const allInteractions = {
 
 @Service()
 export class Stats {
-
 	private statsRepo: EntityRepository<Stat>
 
 	constructor(
@@ -302,8 +301,8 @@ export class Stats {
 		const sumStats = allDays.map(day => ({
 			date: day,
 			count:
-				(stats1.find(stat => stat.date === day)?.count || 0)
-				+ (stats2.find(stat => stat.date === day)?.count || 0),
+				(stats1.find(stat => stat.date === day)?.count || 0) +
+				(stats2.find(stat => stat.date === day)?.count || 0),
 		}))
 
 		return sumStats
@@ -382,5 +381,4 @@ export class Stats {
 			await this.register(type, value)
 		}
 	}
-
 }

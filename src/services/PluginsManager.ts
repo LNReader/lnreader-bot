@@ -14,7 +14,6 @@ import { getSourceCodeLocation } from '@/utils/functions'
 
 @Service()
 export class PluginsManager {
-
 	private _plugins: Plugin[] = []
 
 	constructor(private store: Store) {}
@@ -108,5 +107,4 @@ export class PluginsManager {
 	get plugins() {
 		return this._plugins
 	}
-
 }

@@ -1,0 +1,59 @@
+# Don't copy these into Docker build context (faster builds)
+
+# Node
+node_modules/
+npm-debug.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+
+# Logs
+logs/
+*.log
+
+# Database (will use volume mount)
+database/
+*.sqlite
+data/
+
+# Git
+.git/
+.github/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+tests/
+*.test.ts
+*.spec.ts
+
+# Documentation
+*.md
+!README.md
+
+# Docker
+.docker/
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github/
+
+# Railway
+railway.json
+.railwayignore

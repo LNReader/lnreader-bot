@@ -4,7 +4,6 @@ import { Service } from '@/decorators'
 
 @Service()
 export class Scheduler {
-
 	private _jobs: Map<string, CronJob> = new Map()
 
 	get jobs() {
@@ -30,5 +29,4 @@ export class Scheduler {
 	startAllJobs() {
 		this._jobs.forEach(job => job.start())
 	}
-
 }

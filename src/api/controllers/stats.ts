@@ -8,7 +8,6 @@ import { resolveDependencies } from '@/utils/functions'
 @Controller('/stats')
 @UseBefore(DevAuthenticated)
 export class StatsController extends BaseController {
-
 	private stats: Stats
 
 	constructor() {
@@ -101,5 +100,4 @@ export class StatsController extends BaseController {
 			guilds: await this.stats.countStatsPerDays('TOTAL_GUILDS', numberOfDays),
 		}
 	}
-
 }

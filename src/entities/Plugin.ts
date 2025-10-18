@@ -2,7 +2,6 @@ import { Entity, EntityRepository, EntityRepositoryType, FilterQuery, PrimaryKey
 
 @Entity({ customRepository: () => PluginRepository })
 export class Plugin {
-
 	[EntityRepositoryType]?: PluginRepository
 
 	@PrimaryKey({ autoincrement: false })
@@ -31,11 +30,9 @@ export class Plugin {
 
 	@Property({ nullable: true })
 	customJS?: string
-
 }
 
 export class PluginRepository extends EntityRepository<Plugin> {
-
 	public pageSize = 10
 	async findWithPage(page: number, language: string = '', keyword: string = '') {
 		language = `%${language}%`
@@ -53,5 +50,4 @@ export class PluginRepository extends EntityRepository<Plugin> {
 			offset,
 		})
 	}
-
 }

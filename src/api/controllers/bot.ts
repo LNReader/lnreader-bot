@@ -14,7 +14,6 @@ import { getDevs, isDev, isInMaintenance, resolveDependencies, setMaintenance } 
 @Controller('/bot')
 @UseBefore(BotOnline, DevAuthenticated)
 export class BotController extends BaseController {
-
 	private client: Client
 
 	// test
@@ -112,10 +111,10 @@ export class BotController extends BaseController {
 		let invite: any
 		for (const channel of guildChannels.values()) {
 			if (
-				channel
-				&& (guild.members.me?.permissionsIn(channel).has(PermissionsBitField.Flags.CreateInstantInvite)
-				|| false)
-				&& [ChannelType.GuildText, ChannelType.GuildVoice, ChannelType.GuildAnnouncement].includes(channel.type)
+				channel &&
+				(guild.members.me?.permissionsIn(channel).has(PermissionsBitField.Flags.CreateInstantInvite) ||
+					false) &&
+				[ChannelType.GuildText, ChannelType.GuildVoice, ChannelType.GuildAnnouncement].includes(channel.type)
 			) {
 				invite = await (
 					channel as BaseGuildTextChannel | BaseGuildVoiceChannel | NewsChannel | undefined
@@ -204,5 +203,4 @@ export class BotController extends BaseController {
 	async dev(@PathParams('id') id: string) {
 		return isDev(id)
 	}
-
 }

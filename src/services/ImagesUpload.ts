@@ -16,14 +16,13 @@ const imageHasher = promisify(callbackImageHash)
 
 @Service()
 export class ImagesUpload {
-
 	private validImageExtensions = ['.png', '.jpg', '.jpeg']
 	private imageFolderPath = path.join(__dirname, '..', '..', 'assets', 'images')
 
 	private imgurClient: ImgurClient | null = env.IMGUR_CLIENT_ID
 		? new ImgurClient({
-			clientId: env.IMGUR_CLIENT_ID,
-		})
+				clientId: env.IMGUR_CLIENT_ID,
+			})
 		: null
 
 	private imageRepo: ImageRepository
@@ -45,7 +44,7 @@ export class ImagesUpload {
 
 	async syncWithDatabase() {
 		if (!fileOrDirectoryExists(this.imageFolderPath))
-			this.logger.log('Image folder does not exist, couldn\'t sync with database', 'warn')
+			this.logger.log("Image folder does not exist, couldn't sync with database", 'warn')
 
 		// get all images inside the assets/images folder
 		const images = getFiles(this.imageFolderPath)
@@ -78,9 +77,9 @@ export class ImagesUpload {
 
 			if (!imageInDb) await this.addNewImageToImgur(imagePath, imageHash)
 			else if (
-				imageInDb
-				&& (imageInDb.basePath !== imagePath.split('/').slice(0, -1).join('/')
-				|| imageInDb.fileName !== imagePath.split('/').slice(-1)[0])
+				imageInDb &&
+				(imageInDb.basePath !== imagePath.split('/').slice(0, -1).join('/') ||
+					imageInDb.fileName !== imagePath.split('/').slice(-1)[0])
 			)
 				console.warn(
 					`Image ${chalk.bold.green(imagePath)} has the same hash as ${chalk.bold.green(imageInDb.basePath + (imageInDb.basePath?.length ? '/' : '') + imageInDb.fileName)} so it will skip`
@@ -151,5 +150,4 @@ export class ImagesUpload {
 
 		return !res.request?.path.includes('/removed')
 	}
-
 }

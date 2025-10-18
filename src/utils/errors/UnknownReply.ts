@@ -5,7 +5,6 @@ import { BaseError } from '@/utils/classes'
 import { simpleErrorEmbed } from '@/utils/functions'
 
 export class UnknownReplyError extends BaseError {
-
 	private interaction: CommandInteraction
 
 	constructor(interaction: CommandInteraction, message?: string) {
@@ -18,5 +17,4 @@ export class UnknownReplyError extends BaseError {
 		const locale = getLocaleFromInteraction(this.interaction)
 		simpleErrorEmbed(this.interaction, L[locale].ERRORS.UNKNOWN())
 	}
-
 }

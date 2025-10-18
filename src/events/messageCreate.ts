@@ -5,7 +5,6 @@ import { Maintenance } from '@/guards'
 
 @Discord()
 export default class MessageCreateEvent {
-
 	@On('messageCreate')
 	@Guard(Maintenance)
 	async messageCreateHandler([message]: ArgsOf<'messageCreate'>, client: Client) {
@@ -14,5 +13,4 @@ export default class MessageCreateEvent {
 		}
 		await client.executeCommand(message, false)
 	}
-
 }

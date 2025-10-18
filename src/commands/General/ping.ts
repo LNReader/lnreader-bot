@@ -7,10 +7,9 @@ import { Discord, Slash } from '@/decorators'
 @Discord()
 @Category('General')
 export default class PingCommand {
-
 	@Slash({
 		name: 'ping',
-		description: 'Check the bot\'s response time and connection status',
+		description: "Check the bot's response time and connection status",
 	})
 	async ping(interaction: CommandInteraction, client: Client, { localize }: InteractionData) {
 		const msg = (await interaction.followUp({ content: 'Pinging...', fetchReply: true })) as Message
@@ -23,5 +22,4 @@ export default class PingCommand {
 
 		await msg.edit(content)
 	}
-
 }

@@ -7,7 +7,6 @@ import { setMaintenance, simpleSuccessEmbed } from '@/utils/functions'
 
 @Discord()
 export default class MaintenanceCommand {
-
 	@Slash({
 		name: 'maintenance',
 		description: 'Toggle maintenance mode to disable bot commands (Owner only)',
@@ -34,5 +33,4 @@ export default class MaintenanceCommand {
 			})
 		)
 	}
-
 }

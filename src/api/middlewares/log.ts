@@ -6,11 +6,10 @@ import { resolveDependency } from '@/utils/functions'
 
 @Middleware()
 export class Log {
-
 	private logger: Logger
 
 	constructor() {
-		resolveDependency(Logger).then((logger) => {
+		resolveDependency(Logger).then(logger => {
 			this.logger = logger
 		})
 	}
@@ -29,5 +28,4 @@ export class Log {
 			delete request.query.logIgnore
 		}
 	}
-
 }

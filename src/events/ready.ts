@@ -11,7 +11,6 @@ import { resolveDependency, syncAllGuilds } from '@/utils/functions'
 @Discord()
 @Injectable()
 export default class ReadyEvent {
-
 	constructor(
 		private db: Database,
 		private logger: Logger,
@@ -88,5 +87,4 @@ export default class ReadyEvent {
 		await pluginRepository.upsertMany(plugins)
 		this.logger.console('Refreshed plugins')
 	}
-
 }

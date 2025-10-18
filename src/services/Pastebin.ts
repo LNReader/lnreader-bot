@@ -7,7 +7,6 @@ import { Database } from '@/services'
 
 @Service()
 export class Pastebin {
-
 	private client: RentryClient = new RentryClient()
 
 	constructor(private db: Database) {
@@ -54,5 +53,4 @@ export class Pastebin {
 			if (diff >= paste.lifetime) await this.client.deletePaste(paste.id, paste.editCode)
 		}
 	}
-
 }

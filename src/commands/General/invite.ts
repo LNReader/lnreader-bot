@@ -10,7 +10,6 @@ import { getColor } from '@/utils/functions'
 @Discord()
 @Category('General')
 export default class InviteCommand {
-
 	@Slash({
 		name: 'invite',
 		description: 'Get the bot invite link',
@@ -26,5 +25,4 @@ export default class InviteCommand {
 			embeds: [embed.toJSON()],
 		})
 	}
-
 }

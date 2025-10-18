@@ -13,6 +13,8 @@ Discord bot for [LNReader](https://github.com/LNReader/lnreader) community suppo
 
 ## Setup
 
+### Local Development
+
 1. Install dependencies:
 ```bash
 npm install
@@ -35,8 +37,6 @@ npm run dev
 npm run build
 npm start
 ```
-
-Built with [TSCord](https://github.com/barthofu/tscord) template.
 
 ## License
 

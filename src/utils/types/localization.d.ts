@@ -1,5 +1,5 @@
 declare enum AdditionalLocaleString {
-	English = 'en'
+	English = 'en',
 }
 
 type TranslationsNestedPaths = NestedPaths<import('@/i18n').Translations>

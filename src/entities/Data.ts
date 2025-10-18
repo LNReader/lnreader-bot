@@ -20,7 +20,6 @@ type DataType = keyof typeof defaultData
 
 @Entity({ customRepository: () => DataRepository })
 export class Data extends CustomBaseEntity {
-
 	[EntityRepositoryType]?: DataRepository
 
 	@PrimaryKey()
@@ -28,7 +27,6 @@ export class Data extends CustomBaseEntity {
 
 	@Property()
 	value: string = ''
-
 }
 
 // ===========================================
@@ -36,7 +34,6 @@ export class Data extends CustomBaseEntity {
 // ===========================================
 
 export class DataRepository extends EntityRepository<Data> {
-
 	async get<T extends DataType>(key: T): Promise<(typeof defaultData)[T]> {
 		const data = await this.findOne({ key })
 
@@ -69,5 +66,4 @@ export class DataRepository extends EntityRepository<Data> {
 			await this.persistAndFlush(newData)
 		}
 	}
-
 }
