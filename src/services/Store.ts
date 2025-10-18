@@ -4,7 +4,6 @@ import { apiConfig } from '@/configs'
 import { Service } from '@/decorators'
 
 type State = {
-
 	authorizedAPITokens: string[]
 	botHasBeenReloaded: boolean
 	ready: {
@@ -14,7 +13,6 @@ type State = {
 }
 
 const initialState: State = {
-
 	authorizedAPITokens: [],
 	botHasBeenReloaded: false,
 	ready: {

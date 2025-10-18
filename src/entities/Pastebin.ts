@@ -11,16 +11,16 @@ export class Pastebin {
 	[EntityRepositoryType]?: PastebinRepository
 
 	@PrimaryKey({ autoincrement: false })
-    id: string
+	id: string
 
 	@Property()
-    editCode: string
+	editCode: string
 
 	@Property()
-    lifetime: number = -1
+	lifetime: number = -1
 
 	@Property()
-    createdAt: Date = new Date()
+	createdAt: Date = new Date()
 
 }
 
@@ -28,6 +28,4 @@ export class Pastebin {
 // =========== Custom Repository =============
 // ===========================================
 
-export class PastebinRepository extends EntityRepository<Pastebin> {
-
-}
+export class PastebinRepository extends EntityRepository<Pastebin> {}

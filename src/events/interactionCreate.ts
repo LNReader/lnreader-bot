@@ -19,18 +19,11 @@ export default class InteractionCreateEvent {
 	) {}
 
 	@On('interactionCreate')
-	@Guard(
-		Maintenance
-	)
-	async interactionCreateHandler(
-		[interaction]: ArgsOf<'interactionCreate'>,
-		client: Client
-	) {
+	@Guard(Maintenance)
+	async interactionCreateHandler([interaction]: ArgsOf<'interactionCreate'>, client: Client) {
 		// defer the reply
-		if (
-			generalConfig.automaticDeferring
-			&& interaction instanceof CommandInteraction
-		) await interaction.deferReply()
+		if (generalConfig.automaticDeferring && interaction instanceof CommandInteraction)
+			await interaction.deferReply()
 
 		// insert user in db if not exists
 		await syncUser(interaction.user)

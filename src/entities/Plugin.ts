@@ -1,58 +1,57 @@
-import { Entity, EntityRepository, EntityRepositoryType, FilterQuery, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, EntityRepository, EntityRepositoryType, FilterQuery, PrimaryKey, Property } from '@mikro-orm/core'
 
-@Entity({customRepository: () => PluginRepository})
+@Entity({ customRepository: () => PluginRepository })
 export class Plugin {
-    [EntityRepositoryType]?: PluginRepository
 
-    @PrimaryKey({autoincrement: false})
-    id: string
+	[EntityRepositoryType]?: PluginRepository
 
-    @Property()
-    name: string
+	@PrimaryKey({ autoincrement: false })
+	id: string
 
-    @Property()
-    site: string;
+	@Property()
+	name: string
 
-    @Property()
-    lang: string;
+	@Property()
+	site: string
 
-    @Property()
-    version: string;
+	@Property()
+	lang: string
 
-    @Property()
-    url: string;
+	@Property()
+	version: string
 
-    @Property()
-    iconUrl: string;
+	@Property()
+	url: string
 
-    @Property({nullable: true})
-    customCSS?: string;
+	@Property()
+	iconUrl: string
 
-    @Property({nullable: true})
-    customJS?: string;
+	@Property({ nullable: true })
+	customCSS?: string
+
+	@Property({ nullable: true })
+	customJS?: string
+
 }
 
 export class PluginRepository extends EntityRepository<Plugin> {
-    public pageSize = 10;
-    async findWithPage(page: number, language: string = '', keyword: string = '') {
-        language = '%' + language + '%';
-        keyword = '%' + keyword + '%';
-        const offset = this.pageSize * (page - 1);
-        const filterQuery: FilterQuery<Plugin> = {
-            $and: [
-                { lang: {$like: language} },
-                { $or: 
-                    [
-                        { name: {$like: keyword} },
-                        { id: {$like: keyword} },
-                        { site: {$like: keyword} }
-                    ]
-                }
-            ]
-        }
-        return this.findAndCount(filterQuery, {
-            limit: this.pageSize,
-            offset
-        })
-    }
+
+	public pageSize = 10
+	async findWithPage(page: number, language: string = '', keyword: string = '') {
+		language = `%${language}%`
+		keyword = `%${keyword}%`
+		const offset = this.pageSize * (page - 1)
+		const filterQuery: FilterQuery<Plugin> = {
+			$and: [
+				{ lang: { $like: language } },
+				{ $or: [{ name: { $like: keyword } }, { id: { $like: keyword } }, { site: { $like: keyword } }] },
+			],
+		}
+
+		return this.findAndCount(filterQuery, {
+			limit: this.pageSize,
+			offset,
+		})
+	}
+
 }

@@ -6,18 +6,13 @@ import { constant } from 'case'
  * @returns {boolean} true if all strings are valid
  */
 export function validString(...strings: Array<unknown>): boolean {
-	if (strings.length === 0)
-		return false
+	if (strings.length === 0) return false
 
 	for (const currString of strings) {
-		if (!currString)
-			return false
-		if (typeof currString !== 'string')
-			return false
-		if (currString.length === 0)
-			return false
-		if (currString.trim().length === 0)
-			return false
+		if (!currString) return false
+		if (typeof currString !== 'string') return false
+		if (currString.length === 0) return false
+		if (currString.trim().length === 0) return false
 	}
 
 	return true

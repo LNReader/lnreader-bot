@@ -10,15 +10,12 @@ export class Pastebin {
 
 	private client: RentryClient = new RentryClient()
 
-	constructor(
-		private db: Database
-	) {
+	constructor(private db: Database) {
 		this.client.createToken()
 	}
 
 	private async waitForToken(): Promise<void> {
-		while (!this.client.getToken())
-			await new Promise(resolve => setTimeout(resolve, 100))
+		while (!this.client.getToken()) await new Promise(resolve => setTimeout(resolve, 100))
 	}
 
 	async createPaste(content: string, lifetime?: number): Promise<Paste | undefined> {
@@ -29,8 +26,7 @@ export class Pastebin {
 		const pasteEntity = new PastebinEntity()
 		pasteEntity.id = paste.url
 		pasteEntity.editCode = paste.editCode
-		if (lifetime)
-			pasteEntity.lifetime = Math.floor(lifetime)
+		if (lifetime) pasteEntity.lifetime = Math.floor(lifetime)
 
 		await this.db.get(PastebinEntity).persistAndFlush(pasteEntity)
 
@@ -42,8 +38,7 @@ export class Pastebin {
 
 		const paste = await this.db.get(PastebinEntity).findOne({ id })
 
-		if (!paste)
-			return
+		if (!paste) return
 
 		await this.client.deletePaste(id, paste.editCode)
 		await this.db.get(PastebinEntity).remove(paste)
@@ -56,8 +51,7 @@ export class Pastebin {
 		for (const paste of pastes) {
 			const diff = dayjs().diff(dayjs(paste.createdAt), 'day')
 
-			if (diff >= paste.lifetime)
-				await this.client.deletePaste(paste.id, paste.editCode)
+			if (diff >= paste.lifetime) await this.client.deletePaste(paste.id, paste.editCode)
 		}
 	}
 

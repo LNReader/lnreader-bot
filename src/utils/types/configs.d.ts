@@ -1,5 +1,4 @@
 type GeneralConfigType = {
-
 	name: string
 	description: string
 	defaultLocale: import('@/i18n').Locales
@@ -22,11 +21,9 @@ type GeneralConfigType = {
 		text: string
 		type: 'PLAYING' | 'STREAMING' | 'LISTENING' | 'WATCHING' | 'CUSTOM' | 'COMPETING'
 	}[]
-
 }
 
 type DatabaseConfigType = {
-
 	path: `${string}/`
 
 	backup: {
@@ -36,7 +33,6 @@ type DatabaseConfigType = {
 }
 
 type LogsConfigType = {
-
 	debug: boolean
 	logTailMaxSize: number
 
@@ -79,15 +75,12 @@ type LogsConfigType = {
 }
 
 type StatsConfigType = {
-
 	interaction: {
-
 		exclude: InteractionsConstants[]
 	}
 }
 
 type APIConfigType = {
-
 	enabled: boolean
 	port: number
 }

@@ -1,5 +1,4 @@
 export const logsConfig: LogsConfigType = {
-
 	debug: false, // set the discordx client debug logs
 	logTailMaxSize: 50, // max size of the last logs kept in memory
 
@@ -19,10 +18,7 @@ export const logsConfig: LogsConfigType = {
 		channel: null,
 
 		// exclude some interactions types
-		exclude: [
-			'BUTTON_INTERACTION',
-			'SELECT_MENU_INTERACTION',
-		],
+		exclude: ['BUTTON_INTERACTION', 'SELECT_MENU_INTERACTION'],
 	},
 
 	simpleCommand: {

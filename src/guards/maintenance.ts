@@ -7,9 +7,7 @@ import { isDev, isInMaintenance, replyToInteraction, resolveUser } from '@/utils
 /**
  * Prevent interactions from running when bot is in maintenance
  */
-export const Maintenance: GuardFunction<
-    | ArgsOf<'messageCreate' | 'interactionCreate'>
-> = async (arg, client, next) => {
+export const Maintenance: GuardFunction<ArgsOf<'messageCreate' | 'interactionCreate'>> = async (arg, client, next) => {
 	if (
 		arg instanceof CommandInteraction
 		|| arg instanceof SimpleCommandMessage
@@ -18,11 +16,7 @@ export const Maintenance: GuardFunction<
 		const user = resolveUser(arg)
 		const maintenance = await isInMaintenance()
 
-		if (
-			maintenance
-			&& user?.id
-			&& !isDev(user.id)
-		) {
+		if (maintenance && user?.id && !isDev(user.id)) {
 			const locale = getLocaleFromInteraction(arg)
 			const localizedReplyMessage = L[locale].GUARDS.MAINTENANCE()
 

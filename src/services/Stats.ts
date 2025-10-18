@@ -11,7 +11,15 @@ import { statsConfig } from '@/configs'
 import { Schedule, Service } from '@/decorators'
 import { Guild, Stat, User } from '@/entities'
 import { Database } from '@/services'
-import { datejs, formatDate, getTypeOfInteraction, resolveAction, resolveChannel, resolveGuild, resolveUser } from '@/utils/functions'
+import {
+	datejs,
+	formatDate,
+	getTypeOfInteraction,
+	resolveAction,
+	resolveChannel,
+	resolveGuild,
+	resolveUser,
+} from '@/utils/functions'
 
 const allInteractions = {
 	$or: [
@@ -29,7 +37,7 @@ export class Stats {
 
 	constructor(
 		private db: Database,
-        @inject(delay(() => Client)) private client: Client
+		@inject(delay(() => Client)) private client: Client
 	) {
 		this.statsRepo = this.db.get(Stat)
 	}
@@ -44,8 +52,7 @@ export class Stats {
 		const stat = new Stat()
 		stat.type = type
 		stat.value = value
-		if (additionalData)
-			stat.additionalData = additionalData
+		if (additionalData) stat.additionalData = additionalData
 
 		await this.statsRepo.persistAndFlush(stat)
 	}
@@ -57,8 +64,7 @@ export class Stats {
 	async registerInteraction(interaction: AllInteractions) {
 		// we extract data from the interaction
 		const type = constant(getTypeOfInteraction(interaction)) as InteractionsConstants
-		if (statsConfig.interaction.exclude.includes(type))
-			return
+		if (statsConfig.interaction.exclude.includes(type)) return
 
 		const value = resolveAction(interaction)
 		const additionalData = {
@@ -118,9 +124,12 @@ export class Stats {
 	 * Get the last guild added to the database.
 	 */
 	async getLastGuildAdded() {
-		const guilds = await this.db.get(Guild).find({}, {
-			orderBy: { createdAt: 'DESC' },
-		})
+		const guilds = await this.db.get(Guild).find(
+			{},
+			{
+				orderBy: { createdAt: 'DESC' },
+			}
+		)
 
 		return guilds[0]
 	}
@@ -154,10 +163,7 @@ export class Stats {
 				{
 					$replaceRoot: {
 						newRoot: {
-							$mergeObjects: [
-								'$_id',
-								{ count: '$count' },
-							],
+							$mergeObjects: ['$_id', { count: '$count' }],
 						},
 					},
 				},
@@ -191,14 +197,10 @@ export class Stats {
 				},
 			})
 
-			if (commandsCount <= 10)
-				usersActivity['1-10']++
-			else if (commandsCount <= 50)
-				usersActivity['11-50']++
-			else if (commandsCount <= 100)
-				usersActivity['51-100']++
-			else if (commandsCount <= 1000)
-				usersActivity['101-1000']++
+			if (commandsCount <= 10) usersActivity['1-10']++
+			else if (commandsCount <= 50) usersActivity['11-50']++
+			else if (commandsCount <= 100) usersActivity['51-100']++
+			else if (commandsCount <= 1000) usersActivity['101-1000']++
 			else usersActivity['>1000']++
 		}
 
@@ -219,8 +221,7 @@ export class Stats {
 
 		for (const guild of guilds) {
 			const discordGuild = await this.client.guilds.fetch(guild.id).catch(() => null)
-			if (!discordGuild)
-				continue
+			if (!discordGuild) continue
 
 			const commandsCount = await this.db.get(Stat).count({
 				...allInteractions,
@@ -249,7 +250,7 @@ export class Stats {
 		const stats: StatPerInterval = []
 
 		for (let i = 0; i < days; i++) {
-			const date = new Date(now - (i * 24 * 60 * 60 * 1000))
+			const date = new Date(now - i * 24 * 60 * 60 * 1000)
 			const statCount = await this.getCountForGivenDay(type, date)
 
 			stats.push({
@@ -291,19 +292,18 @@ export class Stats {
 	 * @param stats2
 	 */
 	sumStats(stats1: StatPerInterval, stats2: StatPerInterval): StatPerInterval {
-		const allDays = [...new Set(stats1.concat(stats2).map(stat => stat.date))]
-			.sort((a, b) => {
-				const aa = a.split('/').reverse().join()
-				const bb = b.split('/').reverse().join()
+		const allDays = [...new Set(stats1.concat(stats2).map(stat => stat.date))].sort((a, b) => {
+			const aa = a.split('/').reverse().join()
+			const bb = b.split('/').reverse().join()
 
-				return aa < bb ? -1 : (aa > bb ? 1 : 0)
-			})
+			return aa < bb ? -1 : aa > bb ? 1 : 0
+		})
 
 		const sumStats = allDays.map(day => ({
 			date: day,
 			count:
-            (stats1.find(stat => stat.date === day)?.count || 0)
-            + (stats2.find(stat => stat.date === day)?.count || 0),
+				(stats1.find(stat => stat.date === day)?.count || 0)
+				+ (stats2.find(stat => stat.date === day)?.count || 0),
 		}))
 
 		return sumStats
@@ -340,7 +340,7 @@ export class Stats {
 			cpu: pidUsage.cpu.toFixed(1),
 			memory: {
 				usedInMb: (pidUsage.memory / (1024 * 1024)).toFixed(1),
-				percentage: (pidUsage.memory / osu.mem.totalMem() * 100).toFixed(1),
+				percentage: ((pidUsage.memory / osu.mem.totalMem()) * 100).toFixed(1),
 			},
 		}
 	}

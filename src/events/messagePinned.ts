@@ -6,9 +6,7 @@ import { Discord, On } from '@/decorators'
 export default class messagePinnedEvent {
 
 	@On('messagePinned')
-	async messagePinnedHandler(
-		[message]: [Message]
-	) {
+	async messagePinnedHandler([message]: [Message]) {
 		console.log(`This message from ${message.author.tag} has been pinned : ${message.content}`)
 	}
 

@@ -32,11 +32,9 @@ export const generalConfig: GeneralConfigType = {
 			type: 'LISTENING',
 		},
 	],
-
 }
 
 // global colors
 export const colorsConfig = {
-
 	primary: '#2F3136',
 }

@@ -85,12 +85,10 @@ export async function syncAllGuilds(client: Client) {
 
 	// add missing guilds
 	const guilds = client.guilds.cache
-	for (const guild of guilds)
-		await syncGuild(guild[1].id, client)
+	for (const guild of guilds) await syncGuild(guild[1].id, client)
 
 	// remove deleted guilds
 	const guildRepo = db.get(Guild)
 	const guildsData = await guildRepo.getActiveGuilds()
-	for (const guildData of guildsData)
-		await syncGuild(guildData.id, client)
+	for (const guildData of guildsData) await syncGuild(guildData.id, client)
 }

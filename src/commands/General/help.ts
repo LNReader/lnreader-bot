@@ -1,5 +1,12 @@
 import { Category } from '@discordx/utilities'
-import { ActionRowBuilder, APISelectMenuOption, CommandInteraction, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuInteraction } from 'discord.js'
+import {
+	ActionRowBuilder,
+	APISelectMenuOption,
+	CommandInteraction,
+	EmbedBuilder,
+	StringSelectMenuBuilder,
+	StringSelectMenuInteraction,
+} from 'discord.js'
 import { Client, MetadataStorage, SelectMenuComponent } from 'discordx'
 import { TranslationFunctions } from 'src/i18n/i18n-types'
 
@@ -18,12 +25,9 @@ export default class HelpCommand {
 
 	@Slash({
 		name: 'help',
+		description: 'View all available commands and their descriptions',
 	})
-	async help(
-		interaction: CommandInteraction,
-		client: Client,
-		{ localize }: InteractionData
-	) {
+	async help(interaction: CommandInteraction, client: Client, { localize }: InteractionData) {
 		const embed = await this.getEmbed({ client, interaction, locale: localize })
 
 		const components: any[] = []
@@ -51,7 +55,13 @@ export default class HelpCommand {
 		})
 	}
 
-	private async getEmbed({ client, interaction, category = '', pageNumber = 0, locale }: {
+	private async getEmbed({
+		client,
+		interaction,
+		category = '',
+		pageNumber = 0,
+		locale,
+	}: {
 		client: Client
 		interaction: CommandInteraction | StringSelectMenuInteraction
 		category?: string
@@ -78,21 +88,18 @@ export default class HelpCommand {
 			]
 
 			for (const category of this._categories) {
-				const commands = category[1]
-					.map((cmd) => {
-						return `</${
-							cmd.group ? `${cmd.group} ` : ''
-								}${cmd.subgroup ? `${cmd.subgroup} ` : ''
-								}${cmd.name
-								}:${
-								applicationCommands.find(acmd => acmd.name === (cmd.group ? cmd.group : cmd.name))!.id
-								}>`
-					})
+				const commands = category[1].map((cmd) => {
+					return `</${cmd.group ? `${cmd.group} ` : ''}${cmd.subgroup ? `${cmd.subgroup} ` : ''}${cmd.name}:${
+						applicationCommands.find(acmd => acmd.name === (cmd.group ? cmd.group : cmd.name))!.id
+					}>`
+				})
 
-				embed.addFields([{
-					name: category[0],
-					value: commands.join(', '),
-				}])
+				embed.addFields([
+					{
+						name: category[0],
+						value: commands.join(', '),
+					},
+				])
 			}
 
 			return embed
@@ -113,8 +120,7 @@ export default class HelpCommand {
 				text: `${client.user!.username} • Page ${pageNumber + 1} of ${maxPage}`,
 			})
 
-		if (!resultsOfPage)
-			return embed
+		if (!resultsOfPage) return embed
 
 		for (const item of resultsOfPage) {
 			const currentGuild = resolveGuild(interaction)
@@ -124,14 +130,16 @@ export default class HelpCommand {
 			]
 
 			const { description } = item
-			const fieldValue = validString(description) ? description : 'No description'
+			const fieldValue = validString(description) ? description : 'This command has no description yet.'
 			const name = `</${item.group ? `${item.group} ` : ''}${item.subgroup ? `${item.subgroup} ` : ''}${item.name}:${applicationCommands.find(acmd => acmd.name === (item.group ? item.group : item.name))!.id}>`
 
-			embed.addFields([{
-				name,
-				value: fieldValue,
-				inline:	resultsOfPage.length > 5,
-			}])
+			embed.addFields([
+				{
+					name,
+					value: fieldValue,
+					inline: resultsOfPage.length > 5,
+				},
+			])
 		}
 
 		return embed
@@ -157,7 +165,9 @@ export default class HelpCommand {
 			})
 		}
 
-		const selectMenu = new StringSelectMenuBuilder().addOptions(optionsForEmbed).setCustomId('help-category-selector')
+		const selectMenu = new StringSelectMenuBuilder()
+			.addOptions(optionsForEmbed)
+			.setCustomId('help-category-selector')
 
 		return new ActionRowBuilder().addComponents(selectMenu)
 	}
@@ -167,8 +177,7 @@ export default class HelpCommand {
 
 		for (const command of commands) {
 			const { category } = command
-			if (!category || !validString(category))
-				continue
+			if (!category || !validString(category)) continue
 
 			if (this._categories.has(category)) {
 				this._categories.get(category)?.push(command)

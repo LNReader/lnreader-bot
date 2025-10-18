@@ -7,10 +7,7 @@ import { syncGuild } from '@/utils/functions'
 export default class GuildCreateEvent {
 
 	@On('guildCreate')
-	async guildCreateHandler(
-		[newGuild]: ArgsOf<'guildCreate'>,
-		client: Client
-	) {
+	async guildCreateHandler([newGuild]: ArgsOf<'guildCreate'>, client: Client) {
 		await syncGuild(newGuild.id, client)
 	}
 

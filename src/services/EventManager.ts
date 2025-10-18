@@ -6,10 +6,7 @@ export class EventManager {
 
 	private _events: Map<string, Function[]> = new Map()
 
-	constructor(
-		private logger: Logger
-	) {
-	}
+	constructor(private logger: Logger) {}
 
 	register(eventName: string, callback: Function): void {
 		this._events.set(eventName, [...(this._events.get(eventName) || []), callback])
@@ -18,8 +15,7 @@ export class EventManager {
 	async emit(eventName: string, ...args: any[]): Promise<void> {
 		const callbacks = this._events.get(eventName)
 
-		if (!callbacks)
-			return
+		if (!callbacks) return
 
 		for (const callback of callbacks) {
 			try {

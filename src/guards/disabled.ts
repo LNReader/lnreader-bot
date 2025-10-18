@@ -8,9 +8,7 @@ import { isDev, replyToInteraction, resolveUser } from '@/utils/functions'
  * Prevent interaction from running when it is disabled
  */
 export const Disabled: GuardFunction<
-	| CommandInteraction
-	| SimpleCommandMessage
-	| ContextMenuCommandInteraction
+	CommandInteraction | SimpleCommandMessage | ContextMenuCommandInteraction
 > = async (arg, client, next) => {
 	const user = resolveUser(arg)
 

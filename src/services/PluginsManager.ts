@@ -17,9 +17,7 @@ export class PluginsManager {
 
 	private _plugins: Plugin[] = []
 
-	constructor(
-		private store: Store
-	) {}
+	constructor(private store: Store) {}
 
 	public async loadPlugins(): Promise<void> {
 		const pluginPaths = await resolve(`${getSourceCodeLocation()}/plugins/*`)
@@ -28,8 +26,7 @@ export class PluginsManager {
 			const plugin = new Plugin(path)
 			await plugin.load()
 
-			if (plugin.isValid())
-				this.plugins.push(plugin)
+			if (plugin.isValid()) this.plugins.push(plugin)
 		}
 	}
 
@@ -37,7 +34,7 @@ export class PluginsManager {
 		return this._plugins.map(plugin => Object.values(plugin.entities)).flat()
 	}
 
-	public getControllers(): typeof BaseController[] {
+	public getControllers(): (typeof BaseController)[] {
 		return this._plugins.map(plugin => Object.values(plugin.controllers)).flat()
 	}
 
@@ -53,17 +50,14 @@ export class PluginsManager {
 		const services: { [key: string]: any } = {}
 
 		for (const plugin of this._plugins) {
-			for (const service in plugin.services)
-
-				services[service] = new plugin.services[service]()
+			for (const service in plugin.services) services[service] = new plugin.services[service]()
 		}
 
 		return services
 	}
 
 	public async execMains(): Promise<void> {
-		for (const plugin of this._plugins)
-			await plugin.execMain()
+		for (const plugin of this._plugins) await plugin.execMain()
 	}
 
 	public async syncTranslations(): Promise<void> {
@@ -73,16 +67,13 @@ export class PluginsManager {
 
 		for (const locale of locales) {
 			const path = `${getSourceCodeLocation()}/i18n/${locale}`
-			if (fs.existsSync(path))
-				translations[locale] = (await import(path))?.default
+			if (fs.existsSync(path)) translations[locale] = (await import(path))?.default
 		}
 
 		for (const plugin of this._plugins) {
 			for (const locale in plugin.translations) {
-				if (!translations[locale])
-					translations[locale] = {}
-				if (!namespaces[locale])
-					namespaces[locale] = []
+				if (!translations[locale]) translations[locale] = {}
+				if (!namespaces[locale]) namespaces[locale] = []
 
 				translations[locale] = { ...translations[locale], [plugin.name]: plugin.translations[locale] }
 				namespaces[locale].push(plugin.name)
@@ -90,8 +81,7 @@ export class PluginsManager {
 		}
 
 		for (const locale in translations) {
-			if (!locales.includes(locale as any))
-				continue
+			if (!locales.includes(locale as any)) continue
 
 			localeMapping.push({
 				locale,
@@ -105,8 +95,7 @@ export class PluginsManager {
 		for (const path of await resolve(`${getSourceCodeLocation()}/i18n/*/*/index.ts`)) {
 			const name = path.split(sep).at(-2) || ''
 
-			if (!pluginsName.includes(name))
-				await fs.rmSync(path.slice(0, -8), { recursive: true, force: true })
+			if (!pluginsName.includes(name)) await fs.rmSync(path.slice(0, -8), { recursive: true, force: true })
 		}
 
 		await storeTranslationsToDisk(localeMapping, true)

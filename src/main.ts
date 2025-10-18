@@ -142,7 +142,8 @@ async function init() {
 
 		// log in with the bot token
 		if (!env.BOT_TOKEN) throw new NoBotTokenError()
-		client.login(env.BOT_TOKEN)
+		client
+			.login(env.BOT_TOKEN)
 			.then(async () => {
 				if (env.NODE_ENV === 'development') {
 					// reload commands and events when a file changes
@@ -171,8 +172,7 @@ async function init() {
 				store.select('ready').subscribe(async (ready) => {
 					// check that all properties that are not null are set to true
 					if (
-						Object
-							.values(ready)
+						Object.values(ready)
 							.filter(value => value !== null)
 							.every(value => value === true)
 					) {

@@ -10,7 +10,6 @@ type Config = {
 }
 
 export const databaseConfig: DatabaseConfigType = {
-
 	path: './database/', // path to the folder containing the migrations and SQLite database (if used)
 
 	// config for setting up an automated backup of the database (ONLY FOR SQLITE)
@@ -21,9 +20,7 @@ export const databaseConfig: DatabaseConfigType = {
 }
 
 const envMikroORMConfig = {
-
 	production: {
-
 		/**
 		 * SQLite
 		 */
@@ -76,16 +73,13 @@ const envMikroORMConfig = {
 		},
 	},
 
-	development: {
-
-	},
-
+	development: {},
 } satisfies Config
 
 if (!envMikroORMConfig.development || Object.keys(envMikroORMConfig.development).length === 0)
 	envMikroORMConfig.development = envMikroORMConfig.production
 
 export const mikroORMConfig = envMikroORMConfig as {
-	production: typeof envMikroORMConfig['production']
-	development: typeof envMikroORMConfig['production']
+	production: (typeof envMikroORMConfig)['production']
+	development: (typeof envMikroORMConfig)['production']
 }

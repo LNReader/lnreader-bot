@@ -7,15 +7,10 @@ import { Maintenance } from '@/guards'
 export default class MessageCreateEvent {
 
 	@On('messageCreate')
-	@Guard(
-		Maintenance
-	)
-	async messageCreateHandler(
-		[message]: ArgsOf<'messageCreate'>,
-		client: Client
-	) {
-		if(message.content === 'nyagami onii-chan'){
-			message.reply('This imouto-chan need your help, <@703930445502480384> onii-chan!');
+	@Guard(Maintenance)
+	async messageCreateHandler([message]: ArgsOf<'messageCreate'>, client: Client) {
+		if (message.content === 'nyagami onii-chan') {
+			message.reply('This imouto-chan need your help, <@703930445502480384> onii-chan!')
 		}
 		await client.executeCommand(message, false)
 	}

@@ -2,7 +2,12 @@ import { of } from 'case'
 import { SlashOption as SlashOptionX, SlashOptionOptions as SlashOptionOptionsX, VerifyName } from 'discordx'
 
 import { InvalidOptionName } from '@/errors'
-import { constantPreserveDots, sanitizeLocales, setFallbackDescription, setOptionsLocalization } from '@/utils/functions'
+import {
+	constantPreserveDots,
+	sanitizeLocales,
+	setFallbackDescription,
+	setOptionsLocalization,
+} from '@/utils/functions'
 
 /**
  * Add a slash command option
@@ -36,17 +41,14 @@ export function SlashOption(options: SlashOptionOptions) {
 
 	options = sanitizeLocales(options)
 
-	if (!isValidOptionName(options.name))
-		throw new InvalidOptionName(options.name)
+	if (!isValidOptionName(options.name)) throw new InvalidOptionName(options.name)
 	if (options.nameLocalizations) {
 		for (const name of Object.values(options.nameLocalizations)) {
-			if (!isValidOptionName(name))
-				throw new InvalidOptionName(name)
+			if (!isValidOptionName(name)) throw new InvalidOptionName(name)
 		}
 	}
 
-	if (!options.description)
-		options = setFallbackDescription(options)
+	if (!options.description) options = setFallbackDescription(options)
 
 	return SlashOptionX(options as SlashOptionOptionsX<VerifyName<string>, string>)
 }

@@ -10,12 +10,9 @@ export default class PingCommand {
 
 	@Slash({
 		name: 'ping',
+		description: 'Check the bot\'s response time and connection status',
 	})
-	async ping(
-		interaction: CommandInteraction,
-		client: Client,
-		{ localize }: InteractionData
-	) {
+	async ping(interaction: CommandInteraction, client: Client, { localize }: InteractionData) {
 		const msg = (await interaction.followUp({ content: 'Pinging...', fetchReply: true })) as Message
 
 		const content = localize.COMMANDS.PING.MESSAGE({

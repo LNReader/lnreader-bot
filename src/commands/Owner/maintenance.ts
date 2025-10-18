@@ -10,15 +10,20 @@ export default class MaintenanceCommand {
 
 	@Slash({
 		name: 'maintenance',
+		description: 'Toggle maintenance mode to disable bot commands (Owner only)',
 	})
-	@Guard(
-		Disabled
-	)
+	@Guard(Disabled)
 	async maintenance(
-		@SlashOption({ name: 'state', type: ApplicationCommandOptionType.Boolean, required: true }) state: boolean,
-			interaction: CommandInteraction,
-			client: Client,
-			{ localize }: InteractionData
+		@SlashOption({
+			name: 'state',
+			description: 'Enable (true) or disable (false) maintenance mode',
+			type: ApplicationCommandOptionType.Boolean,
+			required: true,
+		})
+		state: boolean,
+		interaction: CommandInteraction,
+		client: Client,
+		{ localize }: InteractionData
 	) {
 		await setMaintenance(state)
 

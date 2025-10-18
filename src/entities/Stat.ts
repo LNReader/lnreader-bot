@@ -11,19 +11,19 @@ export class Stat {
 	[EntityRepositoryType]?: StatRepository
 
 	@PrimaryKey()
-    id: number
+	id: number
 
 	@Property()
-    type!: string
+	type!: string
 
 	@Property()
-    value: string = ''
+	value: string = ''
 
 	@Property({ type: 'json', nullable: true })
-    additionalData?: any
+	additionalData?: any
 
 	@Property()
-    createdAt: Date = new Date()
+	createdAt: Date = new Date()
 
 }
 
@@ -31,6 +31,4 @@ export class Stat {
 // =========== Custom Repository =============
 // ===========================================
 
-export class StatRepository extends EntityRepository<Stat> {
-
-}
+export class StatRepository extends EntityRepository<Stat> {}

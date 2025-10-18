@@ -11,11 +11,7 @@ import { DOn, EventOptions, MetadataStorage, MethodDecoratorEx } from 'discordx'
  * @category Decorator
  */
 export function On(event: string, options?: Omit<EventOptions, 'event'>): MethodDecoratorEx {
-	return function <T>(
-		target: Record<string, T>,
-		key: string,
-		descriptor?: PropertyDescriptor
-	) {
+	return function <T>(target: Record<string, T>, key: string, descriptor?: PropertyDescriptor) {
 		const clazz = target as unknown as new () => unknown
 		const on = DOn.create({
 			botIds: options?.botIds,

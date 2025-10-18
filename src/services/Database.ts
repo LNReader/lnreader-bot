@@ -19,7 +19,7 @@ export class Database {
 
 	constructor(
 		@inject(delay(() => Store)) private store: Store,
-        @inject(delay(() => Logger)) private logger: Logger
+		@inject(delay(() => Logger)) private logger: Logger
 	) {}
 
 	async initialize() {
@@ -77,8 +77,7 @@ export class Database {
 	async backup(snapshotName?: string): Promise<boolean> {
 		const { formatDate } = await import('@/utils/functions')
 
-		if (!databaseConfig.backup.enabled && !snapshotName)
-			return false
+		if (!databaseConfig.backup.enabled && !snapshotName) return false
 		if (!this.isSQLiteDatabase()) {
 			this.logger.log('Database is not SQLite, couldn\'t backup')
 
@@ -92,16 +91,11 @@ export class Database {
 			return false
 		}
 
-		if (!snapshotName)
-			snapshotName = `snapshot-${formatDate(new Date(), 'onlyDateFileName')}`
+		if (!snapshotName) snapshotName = `snapshot-${formatDate(new Date(), 'onlyDateFileName')}`
 		const objectsPath = `${backupPath}objects/` as `${string}/`
 
 		try {
-			await backup(
-				mikroORMConfig[env.NODE_ENV]!.dbName!,
-				`${snapshotName}.txt`,
-				objectsPath
-			)
+			await backup(mikroORMConfig[env.NODE_ENV]!.dbName!, `${snapshotName}.txt`, objectsPath)
 
 			return true
 		} catch (e) {
@@ -126,16 +120,12 @@ export class Database {
 		}
 
 		const backupPath = databaseConfig.backup.path
-		if (!backupPath)
-			this.logger.log('Backup path not set, couldn\'t restore', 'error', true)
+		if (!backupPath) this.logger.log('Backup path not set, couldn\'t restore', 'error', true)
 
 		try {
 			console.debug(mikroORMConfig[env.NODE_ENV]!.dbName!)
 			console.debug(`${backupPath}${snapshotName}`)
-			await restore(
-				mikroORMConfig[env.NODE_ENV]!.dbName!,
-                `${backupPath}${snapshotName}`
-			)
+			await restore(mikroORMConfig[env.NODE_ENV]!.dbName!, `${backupPath}${snapshotName}`)
 
 			await this.refreshConnection()
 
@@ -188,8 +178,7 @@ export class Database {
 	isSQLiteDatabase(): boolean {
 		const type = mikroORMConfig[env.NODE_ENV]!.type
 
-		if (type)
-			return ['sqlite', 'better-sqlite'].includes(type)
+		if (type) return ['sqlite', 'better-sqlite'].includes(type)
 		else return false
 	}
 

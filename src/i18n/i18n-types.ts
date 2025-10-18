@@ -5,8 +5,7 @@ import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredP
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
-export type Locales =
-	| 'en'
+export type Locales = 'en'
 
 export type Translation = RootTranslation
 
@@ -335,7 +334,7 @@ export type TranslationFunctions = {
 			/**
 			 * {member} Pong! The message round-trip took {time}ms.{heartbeat}
 			 */
-			MESSAGE: (arg: { heartbeat: string, member: string, time: number }) => LocalizedString
+			MESSAGE: (arg: { heartbeat: string; member: string; time: number }) => LocalizedString
 		}
 		PLUGINS: {
 			/**

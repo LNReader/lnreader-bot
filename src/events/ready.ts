@@ -5,8 +5,8 @@ import { generalConfig } from '@/configs'
 import { Discord, Injectable, Once, Schedule } from '@/decorators'
 import { Data, Plugin } from '@/entities'
 import { Database, Logger, Scheduler, Store } from '@/services'
-import { resolveDependency, syncAllGuilds } from '@/utils/functions'
 import { pluginRepoVersion } from '@/utils/constants/plugins'
+import { resolveDependency, syncAllGuilds } from '@/utils/functions'
 
 @Discord()
 @Injectable()
@@ -62,29 +62,31 @@ export default class ReadyEvent {
 		const client = await resolveDependency(Client)
 		const activity = generalConfig.activities[this.activityIndex]
 
-		if (activity.type === 'STREAMING') { // streaming activity
+		if (activity.type === 'STREAMING') {
+			// streaming activity
 			client.user?.setStatus('online')
 			client.user?.setActivity(activity.text, {
 				url: 'https://www.twitch.tv/discord',
 				type: ActivityType.Streaming,
 			})
-		} else { // other activities
+		} else {
+			// other activities
 			client.user?.setActivity(activity.text, {
 				type: ActivityTypeEnumString.indexOf(activity.type),
 			})
 		}
 
 		this.activityIndex++
-		if (this.activityIndex === generalConfig.activities.length)
-			this.activityIndex = 0
+		if (this.activityIndex === generalConfig.activities.length) this.activityIndex = 0
 	}
 
 	@Schedule('*/5 * * * *')
-	async refreshPlugins(){
-		const pluginRepository = this.db.em.getRepository(Plugin);
-		const url = `https://raw.githubusercontent.com/LNReader/lnreader-plugins/plugins/v${pluginRepoVersion}/.dist/plugins.min.json`;
-		const plugins = await fetch(url).then(res => res.json());
-		await pluginRepository.upsertMany(plugins);
-		this.logger.console("Refreshed plugins");
+	async refreshPlugins() {
+		const pluginRepository = this.db.em.getRepository(Plugin)
+		const url = `https://raw.githubusercontent.com/LNReader/lnreader-plugins/plugins/v${pluginRepoVersion}/.dist/plugins.min.json`
+		const plugins = await fetch(url).then(res => res.json())
+		await pluginRepository.upsertMany(plugins)
+		this.logger.console('Refreshed plugins')
 	}
+
 }

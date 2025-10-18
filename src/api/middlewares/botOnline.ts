@@ -16,8 +16,7 @@ export class BotOnline {
 	}
 
 	async use() {
-		if (this.client.user?.presence.status === 'offline')
-			throw new InternalServerError('Bot is offline')
+		if (this.client.user?.presence.status === 'offline') throw new InternalServerError('Bot is offline')
 	}
 
 }

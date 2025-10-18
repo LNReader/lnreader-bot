@@ -7,7 +7,6 @@ import { CustomBaseEntity } from './BaseEntity'
  * Default data for the Data table (dynamic EAV key/value pattern)
  */
 export const defaultData = {
-
 	maintenance: false,
 	lastMaintenance: Date.now(),
 	lastStartup: Date.now(),
@@ -25,10 +24,10 @@ export class Data extends CustomBaseEntity {
 	[EntityRepositoryType]?: DataRepository
 
 	@PrimaryKey()
-    key!: string
+	key!: string
 
 	@Property()
-    value: string = ''
+	value: string = ''
 
 }
 
@@ -38,13 +37,13 @@ export class Data extends CustomBaseEntity {
 
 export class DataRepository extends EntityRepository<Data> {
 
-	async get<T extends DataType>(key: T): Promise<typeof defaultData[T]> {
+	async get<T extends DataType>(key: T): Promise<(typeof defaultData)[T]> {
 		const data = await this.findOne({ key })
 
 		return JSON.parse(data!.value)
 	}
 
-	async set<T extends DataType>(key: T, value: typeof defaultData[T]): Promise<void> {
+	async set<T extends DataType>(key: T, value: (typeof defaultData)[T]): Promise<void> {
 		const data = await this.findOne({ key })
 
 		if (!data) {
@@ -59,7 +58,7 @@ export class DataRepository extends EntityRepository<Data> {
 		}
 	}
 
-	async add<T extends DataType>(key: T, value: typeof defaultData[T]): Promise<void> {
+	async add<T extends DataType>(key: T, value: (typeof defaultData)[T]): Promise<void> {
 		const data = await this.findOne({ key })
 
 		if (!data) {

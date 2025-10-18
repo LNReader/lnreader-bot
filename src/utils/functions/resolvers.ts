@@ -16,7 +16,6 @@ import { SimpleCommandMessage } from 'discordx'
 import packageJson from '../../../package.json'
 
 const resolvers = {
-
 	user: {
 		SimpleCommandMessage: (interaction: SimpleCommandMessage) => interaction.message.author,
 		ChatInputCommandInteraction: (interaction: ChatInputCommandInteraction) => interaction.user,
@@ -90,9 +89,13 @@ const resolvers = {
 
 	action: {
 		ChatInputCommandInteraction: (interaction: ChatInputCommandInteraction) => {
-			return interaction.commandName
-				+ (interaction?.options.getSubcommandGroup(false) ? ` ${interaction.options.getSubcommandGroup(false)}` : '')
-				+ (interaction?.options.getSubcommand(false) ? ` ${interaction.options.getSubcommand(false)}` : '')
+			return (
+				interaction.commandName
+				+ (interaction?.options.getSubcommandGroup(false)
+					? ` ${interaction.options.getSubcommandGroup(false)}`
+					: '')
+					+ (interaction?.options.getSubcommand(false) ? ` ${interaction.options.getSubcommand(false)}` : '')
+			)
 		},
 		SimpleCommandMessage: (interaction: SimpleCommandMessage) => interaction.name,
 		UserContextMenuCommandInteraction: (interaction: ContextMenuCommandInteraction) => interaction.commandName,
@@ -106,7 +109,8 @@ const resolvers = {
 	},
 
 	locale: {
-		SimpleCommandMessage: (interaction: SimpleCommandMessage) => interaction.message.guild?.preferredLocale ?? 'default',
+		SimpleCommandMessage: (interaction: SimpleCommandMessage) =>
+			interaction.message.guild?.preferredLocale ?? 'default',
 		ChatInputCommandInteraction: (interaction: ChatInputCommandInteraction) => interaction.locale,
 		UserContextMenuCommandInteraction: (interaction: ContextMenuCommandInteraction) => interaction.locale,
 		MessageContextMenuCommandInteraction: (interaction: ContextMenuCommandInteraction) => interaction.locale,
@@ -119,32 +123,59 @@ const resolvers = {
 	},
 }
 
-export function resolveUser(interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction) {
-	return resolvers.user[getTypeOfInteraction(interaction) as keyof typeof resolvers.user]?.(interaction) || resolvers.user.fallback(interaction)
+export function resolveUser(
+	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
+) {
+	return (
+		resolvers.user[getTypeOfInteraction(interaction) as keyof typeof resolvers.user]?.(interaction)
+		|| resolvers.user.fallback(interaction)
+	)
 }
 
-export function resolveMember(interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction) {
-	return resolvers.member[getTypeOfInteraction(interaction) as keyof typeof resolvers.member]?.(interaction) || resolvers.member.fallback(interaction)
+export function resolveMember(
+	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
+) {
+	return (
+		resolvers.member[getTypeOfInteraction(interaction) as keyof typeof resolvers.member]?.(interaction)
+		|| resolvers.member.fallback(interaction)
+	)
 }
 
-export function resolveGuild(interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction) {
-	return resolvers.guild[getTypeOfInteraction(interaction) as keyof typeof resolvers.guild]?.(interaction) || resolvers.guild.fallback(interaction)
+export function resolveGuild(
+	interaction: AllInteractions | Interaction | Message | VoiceState | MessageReaction | PartialMessageReaction
+) {
+	return (
+		resolvers.guild[getTypeOfInteraction(interaction) as keyof typeof resolvers.guild]?.(interaction)
+		|| resolvers.guild.fallback(interaction)
+	)
 }
 
 export function resolveChannel(interaction: AllInteractions) {
-	return resolvers.channel[getTypeOfInteraction(interaction) as keyof typeof resolvers.channel]?.(interaction) || resolvers.channel.fallback(interaction)
+	return (
+		resolvers.channel[getTypeOfInteraction(interaction) as keyof typeof resolvers.channel]?.(interaction)
+		|| resolvers.channel.fallback(interaction)
+	)
 }
 
 export function resolveCommandName(interaction: CommandInteraction | SimpleCommandMessage) {
-	return resolvers.commandName[interaction.constructor.name as keyof typeof resolvers.commandName]?.(interaction) || resolvers.commandName.fallback(interaction)
+	return (
+		resolvers.commandName[interaction.constructor.name as keyof typeof resolvers.commandName]?.(interaction)
+		|| resolvers.commandName.fallback(interaction)
+	)
 }
 
 export function resolveAction(interaction: AllInteractions) {
-	return resolvers.action[getTypeOfInteraction(interaction) as keyof typeof resolvers.action]?.(interaction) || resolvers.action.fallback(interaction)
+	return (
+		resolvers.action[getTypeOfInteraction(interaction) as keyof typeof resolvers.action]?.(interaction)
+		|| resolvers.action.fallback(interaction)
+	)
 }
 
 export function resolveLocale(interaction: AllInteractions) {
-	return resolvers.locale[getTypeOfInteraction(interaction) as keyof typeof resolvers.locale]?.(interaction) || resolvers.locale.fallback(interaction)
+	return (
+		resolvers.locale[getTypeOfInteraction(interaction) as keyof typeof resolvers.locale]?.(interaction)
+		|| resolvers.locale.fallback(interaction)
+	)
 }
 
 export function getTypeOfInteraction(interaction: any): string {

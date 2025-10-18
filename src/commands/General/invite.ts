@@ -13,18 +13,14 @@ export default class InviteCommand {
 
 	@Slash({
 		name: 'invite',
+		description: 'Get the bot invite link',
 	})
 	@Guard()
-	async invite(
-		interaction: CommandInteraction,
-		client: Client,
-		{ localize }: InteractionData
-	) {
+	async invite(interaction: CommandInteraction, client: Client, { localize }: InteractionData) {
 		const embed = new EmbedBuilder()
 			.setTitle(localize.COMMANDS.INVITE.EMBED.TITLE())
 			.setDescription(localize.COMMANDS.INVITE.EMBED.DESCRIPTION({ link: generalConfig.links.invite }))
 			.setColor(getColor('primary'))
-			.setFooter({ text: 'LNReader' })
 
 		interaction.followUp({
 			embeds: [embed.toJSON()],

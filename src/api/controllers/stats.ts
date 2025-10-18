@@ -6,9 +6,7 @@ import { BaseController } from '@/utils/classes'
 import { resolveDependencies } from '@/utils/functions'
 
 @Controller('/stats')
-@UseBefore(
-	DevAuthenticated
-)
+@UseBefore(DevAuthenticated)
 export class StatsController extends BaseController {
 
 	private stats: Stats
@@ -55,7 +53,10 @@ export class StatsController extends BaseController {
 			slashCommands: await this.stats.countStatsPerDays('CHAT_INPUT_COMMAND_INTERACTION', numberOfDays),
 			simpleCommands: await this.stats.countStatsPerDays('SIMPLE_COMMAND_MESSAGE', numberOfDays),
 			userContextMenus: await this.stats.countStatsPerDays('USER_CONTEXT_MENU_COMMAND_INTERACTION', numberOfDays),
-			messageContextMenus: await this.stats.countStatsPerDays('MESSAGE_CONTEXT_MENU_COMMAND_INTERACTION', numberOfDays),
+			messageContextMenus: await this.stats.countStatsPerDays(
+				'MESSAGE_CONTEXT_MENU_COMMAND_INTERACTION',
+				numberOfDays
+			),
 		}
 
 		const body = []

@@ -15,23 +15,32 @@ type SanitizedOptions = {
 type Sanitization<K> = Modify<K, SanitizedOptions>
 
 type ApplicationCommandOptions = Sanitization<
-    WithOptional<import('discordx').ApplicationCommandOptions<string, string>, 'description'>
+	WithOptional<import('discordx').ApplicationCommandOptions<string, string>, 'description'>
 >
 
 type SlashGroupOptions = Sanitization<
-    WithOptional<import('discordx').SlashGroupOptions<string, string, string>, 'description'>
+	WithOptional<import('discordx').SlashGroupOptions<string, string, string>, 'description'>
 >
 
 type SlashOptionOptions = Sanitization<
-    WithOptional<import('discordx').SlashOptionOptions<string, string>, 'description'>
+	WithOptional<import('discordx').SlashOptionOptions<string, string>, 'description'>
 >
 
 type SlashChoiceOption = Modify<import('discordx').SlashChoiceType<string, string | number>, SanitizedOptions>
 
-type ContextMenuOptionsX = Omit<import('discordx').ApplicationCommandOptions<import('discordx').NotEmpty<string>, string> & {
-	type: Exclude<import('discord.js').ApplicationCommandType, import('discord.js').ApplicationCommandType.ChatInput>
-}, 'description' | 'descriptionLocalizations'>
+type ContextMenuOptionsX = Omit<
+	import('discordx').ApplicationCommandOptions<import('discordx').NotEmpty<string>, string> & {
+		type: Exclude<
+			import('discord.js').ApplicationCommandType,
+			import('discord.js').ApplicationCommandType.ChatInput
+		>
+	},
+	'description' | 'descriptionLocalizations'
+>
 
-type ContextMenuOptions = Modify<Modify<ContextMenuOptionsX, SanitizedOptions>, {
-	type: ContextMenuOptionsX['type'] | 'USER' | 'MESSAGE'
-}>
+type ContextMenuOptions = Modify<
+	Modify<ContextMenuOptionsX, SanitizedOptions>,
+	{
+		type: ContextMenuOptionsX['type'] | 'USER' | 'MESSAGE'
+	}
+>

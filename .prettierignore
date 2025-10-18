@@ -1,0 +1,11 @@
+node_modules
+build
+dist
+coverage
+.next
+*.log
+package-lock.json
+.env
+.env.*
+database
+

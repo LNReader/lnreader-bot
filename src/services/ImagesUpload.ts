@@ -37,8 +37,7 @@ export class ImagesUpload {
 
 	isValidImageFormat(file: string): boolean {
 		for (const extension of this.validImageExtensions) {
-			if (file.endsWith(extension))
-				return true
+			if (file.endsWith(extension)) return true
 		}
 
 		return false
@@ -63,7 +62,7 @@ export class ImagesUpload {
 			if (!images.includes(imagePath)) {
 				await this.imageRepo.remove(image).flush()
 				await this.deleteImageFromImgur(image)
-			} else if (!await this.isImgurImageValid(image.url)) {
+			} else if (!(await this.isImgurImageValid(image.url))) {
 				// reupload if the image is not on imgur anymore
 				await this.addNewImageToImgur(imagePath, image.hash, true)
 			}
@@ -71,42 +70,38 @@ export class ImagesUpload {
 
 		// check if the image is already in the database and that its md5 hash is the same.
 		for (const imagePath of images) {
-			const imageHash = await imageHasher(
-                `${this.imageFolderPath}/${imagePath}`,
-                16,
-                true
-			) as string
+			const imageHash = (await imageHasher(`${this.imageFolderPath}/${imagePath}`, 16, true)) as string
 
 			const imageInDb = await this.imageRepo.findOne({
 				hash: imageHash,
 			})
 
-			if (!imageInDb)
-				await this.addNewImageToImgur(imagePath, imageHash)
+			if (!imageInDb) await this.addNewImageToImgur(imagePath, imageHash)
 			else if (
-				imageInDb && (
-					imageInDb.basePath !== imagePath.split('/').slice(0, -1).join('/')
-					|| imageInDb.fileName !== imagePath.split('/').slice(-1)[0])
-			) console.warn(`Image ${chalk.bold.green(imagePath)} has the same hash as ${chalk.bold.green(imageInDb.basePath + (imageInDb.basePath?.length ? '/' : '') + imageInDb.fileName)} so it will skip`)
+				imageInDb
+				&& (imageInDb.basePath !== imagePath.split('/').slice(0, -1).join('/')
+				|| imageInDb.fileName !== imagePath.split('/').slice(-1)[0])
+			)
+				console.warn(
+					`Image ${chalk.bold.green(imagePath)} has the same hash as ${chalk.bold.green(imageInDb.basePath + (imageInDb.basePath?.length ? '/' : '') + imageInDb.fileName)} so it will skip`
+				)
 		}
 	}
 
 	async deleteImageFromImgur(image: Image) {
-		if (!this.imgurClient)
-			return
+		if (!this.imgurClient) return
 
 		await this.imgurClient.deleteImage(image.deleteHash)
 
 		this.logger.log(
-            `Image ${image.fileName} deleted from database because it is not in the filesystem anymore`,
-            'info',
-            true
+			`Image ${image.fileName} deleted from database because it is not in the filesystem anymore`,
+			'info',
+			true
 		)
 	}
 
 	async addNewImageToImgur(imagePath: string, imageHash: string, _reupload: boolean = false) {
-		if (!this.imgurClient)
-			return
+		if (!this.imgurClient) return
 
 		// upload the image to imgur
 		const base64 = base64Encode(`${this.imageFolderPath}/${imagePath}`)
@@ -123,9 +118,9 @@ export class ImagesUpload {
 
 			if (!uploadResponse.success) {
 				this.logger.log(
-                    `Error uploading image ${imageFileName} to imgur: ${uploadResponse.status} ${uploadResponse.data}`,
-                    'error',
-                    true
+					`Error uploading image ${imageFileName} to imgur: ${uploadResponse.status} ${uploadResponse.data}`,
+					'error',
+					true
 				)
 
 				return
@@ -143,19 +138,14 @@ export class ImagesUpload {
 			await this.imageRepo.persistAndFlush(image)
 
 			// log the success
-			this.logger.log(
-                `Image ${chalk.bold.green(imagePath)} uploaded to imgur`,
-                'info',
-                true
-			)
+			this.logger.log(`Image ${chalk.bold.green(imagePath)} uploaded to imgur`, 'info', true)
 		} catch (error: any) {
 			this.logger.log(error?.toString(), 'error', true)
 		}
 	}
 
 	async isImgurImageValid(imageUrl: string): Promise<boolean> {
-		if (!this.imgurClient)
-			return false
+		if (!this.imgurClient) return false
 
 		const res = await axios.get(imageUrl)
 

@@ -36,10 +36,8 @@ export function ContextMenu(options: ContextMenuOptions) {
 	options = sanitizeLocales(options)
 
 	// interop type string if any into enum types
-	if (options.type === 'USER')
-		options.type = ApplicationCommandType.User
-	else if (options.type === 'MESSAGE')
-		options.type = ApplicationCommandType.Message
+	if (options.type === 'USER') options.type = ApplicationCommandType.User
+	else if (options.type === 'MESSAGE') options.type = ApplicationCommandType.Message
 
 	return ContextMenuX(options as ContextMenuOptionsX)
 }

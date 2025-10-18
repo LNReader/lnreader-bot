@@ -7,7 +7,6 @@ import { ExtractLocale, Maintenance, NotBot, RequestContextIsolator } from '@/gu
 
 export function clientConfig(): ClientOptions {
 	return {
-
 		// to only use global commands (use @Guild for specific guild command), comment this line
 		botGuilds: env.NODE_ENV === 'development' ? [env.TEST_GUILD_ID] : undefined,
 
@@ -23,26 +22,16 @@ export function clientConfig(): ClientOptions {
 			GatewayIntentBits.MessageContent,
 		],
 
-		partials: [
-			Partials.Channel,
-			Partials.Message,
-			Partials.Reaction,
-		],
+		partials: [Partials.Channel, Partials.Message, Partials.Reaction],
 
 		// debug logs are disabled in silent mode
 		silent: !logsConfig.debug,
 
-		guards: [
-			RequestContextIsolator,
-			NotBot,
-			Maintenance,
-			ExtractLocale,
-		],
+		guards: [RequestContextIsolator, NotBot, Maintenance, ExtractLocale],
 
 		// configuration for @SimpleCommand
 		simpleCommand: {
 			prefix: generalConfig.simpleCommandsPrefix,
 		},
-
 	}
 }

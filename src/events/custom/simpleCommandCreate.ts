@@ -39,13 +39,8 @@ export default class SimpleCommandCreateEvent {
 	// =============================
 
 	@On('messageCreate')
-	@Guard(
-		Maintenance
-	)
-	async simpleCommandCreateEmitter(
-		[message]: ArgsOf<'messageCreate'>,
-		client: Client
-	) {
+	@Guard(Maintenance)
+	async simpleCommandCreateEmitter([message]: ArgsOf<'messageCreate'>, client: Client) {
 		const prefix = await getPrefixFromMessage(message)
 		const command = await client.parseCommand(prefix, message, false)
 

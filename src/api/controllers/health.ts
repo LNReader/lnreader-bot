@@ -56,9 +56,7 @@ export class HealthController extends BaseController {
 	}
 
 	@Get('/monitoring')
-	@UseBefore(
-		DevAuthenticated
-	)
+	@UseBefore(DevAuthenticated)
 	async monitoring() {
 		const body = {
 			botStatus: {
@@ -75,9 +73,7 @@ export class HealthController extends BaseController {
 	}
 
 	@Get('/logs')
-	@UseBefore(
-		DevAuthenticated
-	)
+	@UseBefore(DevAuthenticated)
 	async logs() {
 		const body = await this.logger.getLastLogs()
 

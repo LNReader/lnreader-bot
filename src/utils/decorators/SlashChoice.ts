@@ -39,9 +39,7 @@ export function SlashChoice(...options: string[] | number[] | SlashChoiceOption[
 		}
 	}
 
-	if (typeof options[0] === 'string')
-		return SlashChoiceX(...options as string[])
-	else if (typeof options[0] === 'number')
-		return SlashChoiceX(...options as number[])
-	else return SlashChoiceX(...options as SlashChoiceOption[])
+	if (typeof options[0] === 'string') return SlashChoiceX(...(options as string[]))
+	else if (typeof options[0] === 'number') return SlashChoiceX(...(options as number[]))
+	else return SlashChoiceX(...(options as SlashChoiceOption[]))
 }

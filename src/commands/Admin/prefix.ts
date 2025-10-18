@@ -15,23 +15,25 @@ import { resolveGuild, simpleSuccessEmbed } from '@/utils/functions'
 @Category('Admin')
 export default class PrefixCommand {
 
-	constructor(
-		private db: Database
-	) {}
+	constructor(private db: Database) {}
 
-	@Slash({ name: 'prefix' })
-	@Guard(
-		UserPermissions(['Administrator'])
-	)
+	@Slash({
+		name: 'prefix',
+		description: 'Set a custom command prefix for this server (Admin only)',
+	})
+	@Guard(UserPermissions(['Administrator']))
 	async prefix(
 		@SlashOption({
 			name: 'prefix',
+			description: 'The new prefix to use (leave empty to reset to default)',
 			localizationSource: 'COMMANDS.PREFIX.OPTIONS.PREFIX',
 			type: ApplicationCommandOptionType.String,
-		}) prefix: string | undefined,
-			interaction: CommandInteraction,
-			client: Client,
-			{ localize }: InteractionData
+			required: false,
+		})
+		prefix: string | undefined,
+		interaction: CommandInteraction,
+		client: Client,
+		{ localize }: InteractionData
 	) {
 		const guild = resolveGuild(interaction)
 		const guildData = await this.db.get(Guild).findOne({ id: guild?.id || '' })
